@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,6 +19,8 @@ public class Welcoming extends JPanel {
 
 	private JTextField tfPassword;
 	private JTextField tfId;
+	private String userText;
+	private String pwdText;
 
 	public Welcoming() {
 		this.setLayout(null);
@@ -45,17 +48,30 @@ public class Welcoming extends JPanel {
 		JButton btnLogIn = new JButton("SE CONNECTER");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String userText;
-	            String pwdText;
+				
+				/* 
+				 *  A MODIFIER : CETTE METHODE SE DECLANCHE LORSQUE QU'ON CLIQUE SUR LE BOUTON <<SE CONNECTER>>
+				 */
+				
 	            userText = tfId.getText();
 	            pwdText = tfPassword.getText();
-	            if (userText.equalsIgnoreCase("tom") && pwdText.equalsIgnoreCase("12345")) {
-	                change(1);
-	                SignIn si = new SignIn();
-	                si.setVisible(true);
-	            } else {
-	                
+	
+	            if (verifytf()) {
+	            
+		            /*
+		             * 		CETTE CONDITION EST UN TEST POUR ACCEDER AU RESTE DE L'APPLI 
+		             * 			/!\ C'EST ICI QU'IL FAUT SE CONNECTER A LA BDD /!\
+		             * 		ON DOIT VERIFIER SI LES INFOS CORRESPONDENT A UN COMPTE DANS LA BDD 
+		             */
+		            if (userText.equalsIgnoreCase("tom") && pwdText.equalsIgnoreCase("12345")) {
+		            	
+		                change(1);	//AFFICHE LE MENU
+		  
+		            } else {
+		            	reject();
+		            }
 	            }
+	            
 			}
 		});
 		btnLogIn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
@@ -91,6 +107,20 @@ public class Welcoming extends JPanel {
 		tfId.setBounds(306, 239, 560, 50);
 		add(tfId);
 		tfId.setColumns(10);
+	}
+	
+	protected void reject() {
+		JOptionPane.showMessageDialog(this, "ID ou MDP incorrect.");
+	}
+
+	/*
+	 * Verifie si tout les champs sont remplis 
+	 */
+	protected boolean verifytf() {
+        if (!userText.isEmpty() && !pwdText.isEmpty())
+        	return true;
+        JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+        return false;
 	}
 	
 	/*

@@ -42,7 +42,7 @@ public class SignIn extends JPanel {
 				FirstNameSI = tfFirstName.getText();
 				mailSI = tfMail.getText();
 				
-				if (verifytf() == true) {
+				if (verifytf()) {
 					
 					//			/!\ C'EST ICI QU'IL FAUT SE CONNECTER A LA BDD /!\
 					
