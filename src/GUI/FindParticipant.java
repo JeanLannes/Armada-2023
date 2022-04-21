@@ -89,6 +89,9 @@ public class FindParticipant extends JPanel {
 		add(lblMessage);
 	}
 	
+	/*
+	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+	 */
 	protected void change(int i) {
 		if (i==1)
 			Main.fpToMenu();

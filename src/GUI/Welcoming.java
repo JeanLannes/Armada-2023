@@ -94,7 +94,7 @@ public class Welcoming extends JPanel {
 	}
 	
 	/*
-	 * Create a link beetween the welcoming menu, the main menu & the Sign In menu  
+	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
 	 */
 	protected void change(int i) {
 		if (i==1)

@@ -112,6 +112,9 @@ public class ModifyParticipant extends JPanel {
 		add(lblArmada);
 	}
 	
+	/*
+	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+	 */
 	protected void change(int i) {
 		if (i==1)
 			Main.fmToMenu();

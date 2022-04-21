@@ -73,6 +73,9 @@ public class Menu extends JPanel {
 		add(btnReturn);
 	}
 
+		/*
+		 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+		 */
 	protected void change(int i, int j) {
 		if (i==1)
 			Main.menuToWel();
@@ -82,5 +85,21 @@ public class Menu extends JPanel {
 			ModifyParticipant.changeIndex(j);
 		}
 	}
+	
+	/*
+	 * Détermine si la personne qui s'inscrit est admin ou un participant
+	 */
+	protected void detectType() {
+
+	}
+	
+	/*
+	 * Restreint l'accès à différentes parties du menu en fonction du type de personne (admin/participant) 
+	 */
+	protected void restriction() {
+
+	}
+	
+	
 	
 }

@@ -16,16 +16,39 @@ public class SignIn extends JPanel {
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
 	private JTextField tfMail;
-
-
+	
+	private String activitySI;
+	private String lastNameSI;
+	private String FirstNameSI;
+	private String mailSI;
+	/*
+	 * Genere une page d'inscrption
+	 */
 	public SignIn() {
 		this.setLayout(null);
 		
 		JButton btnAccept = new JButton("VALIDER");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accepted();
-				change(1);
+				/* 
+				 *  A MODIFIER : CETTE METHODE SE DECLANCHE LORSQUE QU'ON CLIQUE SUR LE BOUTON <<VALIDER>>
+				 */
+				
+				/*
+				 * RECUPERE LE TEXTE DES DIFFERENTS CHAMPS
+				 */
+				activitySI = tfActivity.getText();
+				lastNameSI = tfLastName.getText();
+				FirstNameSI = tfFirstName.getText();
+				mailSI = tfMail.getText();
+				
+				if (verifytf() == true) {
+					
+					//			/!\ C'EST ICI QU'IL FAUT SE CONNECTER A LA BDD /!\
+					
+					accepted(); // APPEL UN MESSAGE DE VALIDATION - CE MESSAGE DOIT ETRE AFFICHE SSI LE COMPTE CREE N'EXISTE PAS ENCORE & SSI LA DEMANDE D'INSCRIPTION EST BIEN DANS LA BDD
+					change(1); // RETOURNE A LA PAGE D'ACCUEIL
+				}
 			}
 		});
 		btnAccept.setBounds(200, 505, 200, 51);
@@ -104,10 +127,26 @@ public class SignIn extends JPanel {
 
 	}
 
+	/*
+	 * Verifie si tout les champs sont remplis 
+	 */
+	protected boolean verifytf() {
+        if (!activitySI.isEmpty() && !lastNameSI.isEmpty() && !FirstNameSI.isEmpty() & !mailSI.isEmpty())
+        	return true;
+        JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+        return false;
+	}
+	
+	/*
+	 * Affiche un message de confirmation dans le cas ou la demande d'inscription a été ajoutée à la BDD
+	 */
 	protected void accepted() {
         JOptionPane.showMessageDialog(this, "Votre demande d'inscription a bien été prise en compte.\nNous reviendrons vers vous au plus vite.");
 	}
 	
+	/*
+	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+	 */
 	protected void change(int i) {
 		if (i==1)
 			Main.siToWel();

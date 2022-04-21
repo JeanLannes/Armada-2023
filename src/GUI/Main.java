@@ -18,11 +18,13 @@ public class Main {
 			public void run() {
 				try {
 					//Creation de la frame
+					//Ceci est le debut du programme
 					f.setTitle("ARMADA 2023");
 					f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					f.setBounds(100, 100, 1080, 720);
 					f.setResizable(false);
 					f.setVisible(true);
+					//On affiche le contenue de la page d'acceuil
 					f.setContentPane(wel);
 					
 				} catch (Exception e) {
@@ -32,30 +34,45 @@ public class Main {
 		});
 	}
 	
+	/*
+	 * Remplace le contenue de la page d'acceuil par celui de la page d'inscription
+	 */
 	public static void welToSi() {
 		wel.setVisible(false);
 		f.setContentPane(si);
 		si.setVisible(true);
 	}
 	
+	/*
+	 * Remplace le contenue de la page d'inscription par celui de la page d'acceuil
+	 */
 	public static void siToWel() {
 		si.setVisible(false);
 		f.setContentPane(wel);
 		wel.setVisible(true);
 	}
 	
+	/*
+	 * Remplace le contenue de la page d'acceuil par celui du menu principal
+	 */
 	public static void welToMenu() {
 		wel.setVisible(false);
 		f.setContentPane(menu);
 		menu.setVisible(true);
 	}
 	
+	/*
+	 * Remplace le contenue du menu par celui de la page d'accueil
+	 */
 	public static void menuToWel() {
 		menu.setVisible(false);
 		f.setContentPane(wel);
 		wel.setVisible(true);
 	}
 	
+	/*
+	 * Remplace le contenue du menu par celui de la page dédiée à la recherche 
+	 */
 	public static void menuToFp() {
 		menu.setVisible(false);
 		f.setContentPane(fp);
