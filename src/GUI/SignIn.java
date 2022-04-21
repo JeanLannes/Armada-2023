@@ -19,11 +19,13 @@ public class SignIn extends JPanel {
 
 
 	public SignIn() {
-		setLayout(null);
-		this.setVisible(true);
+		this.setLayout(null);
+		
 		JButton btnAccept = new JButton("VALIDER");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				accepted();
+				change(1);
 			}
 		});
 		btnAccept.setBounds(200, 505, 200, 51);
@@ -31,6 +33,11 @@ public class SignIn extends JPanel {
 		add(btnAccept);
 		
 		JButton btnReturn = new JButton("RETOUR");
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(1);
+			}
+		});
 		btnReturn.setBounds(666, 505, 200, 51);
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		add(btnReturn);
@@ -95,5 +102,14 @@ public class SignIn extends JPanel {
 		tfMail.setBounds(287, 306, 200, 50);
 		add(tfMail);
 
+	}
+
+	protected void accepted() {
+        JOptionPane.showMessageDialog(this, "Votre demande d'inscription a bien été prise en compte.\nNous reviendrons vers vous au plus vite.");
+	}
+	
+	protected void change(int i) {
+		if (i==1)
+			Main.siToWel();
 	}
 }

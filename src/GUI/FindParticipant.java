@@ -1,12 +1,9 @@
 package GUI;
 
 import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,6 +18,7 @@ public class FindParticipant extends JPanel {
 	private JButton btnConfirm;
 	private JButton btnReturn;
 	private JLabel lblMessage;
+	private static int index;
 
 	public FindParticipant() {
 		JLabel lblLastName = new JLabel("NOM ");
@@ -67,11 +65,17 @@ public class FindParticipant extends JPanel {
 		btnConfirm = new JButton("VALIDER");
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnConfirm.setBounds(250, 530, 200, 51);
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(2);
+			}
+		});
 		add(btnConfirm);
 		
 		btnReturn = new JButton("RETOUR");
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				change(1);
 			}
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
@@ -83,6 +87,26 @@ public class FindParticipant extends JPanel {
 		lblMessage.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessage.setBounds(200, 211, 673, 38);
 		add(lblMessage);
+	}
+	
+	protected void change(int i) {
+		if (i==1)
+			Main.fpToMenu();
+		if (i==2)
+			Main.fpToMp();
+	}
+	
+	protected static void changeIndex(int i) {
+		if (i==1)
+			index=1;
+		if (i==2)
+			index=2;
+		if (i==3)
+			index=3;
+		if (i==4)
+			index=4;
+		if (i==5)
+			index=5;
 	}
 
 }

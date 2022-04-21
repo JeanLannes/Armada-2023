@@ -1,16 +1,12 @@
 package GUI;
 
 import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class ModifyParticipant extends JPanel {
 	private JTextField tfPassword;
@@ -21,6 +17,7 @@ public class ModifyParticipant extends JPanel {
 	private JTextField tfMail;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
+	private static int index;
 
 	public ModifyParticipant() {
 		JLabel lblLastName = new JLabel("NOM ");
@@ -42,11 +39,17 @@ public class ModifyParticipant extends JPanel {
 		btnConfirm = new JButton("VALIDER");
 		btnConfirm.setBounds(250, 530, 200, 51);
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(2);
+			}
+		});
 		
 		btnReturn = new JButton("RETOUR");
 		btnReturn.setBounds(631, 530, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				change(1);
 			}
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
@@ -107,5 +110,25 @@ public class ModifyParticipant extends JPanel {
 		add(tfLastName);
 		add(lblEsigelec);
 		add(lblArmada);
+	}
+	
+	protected void change(int i) {
+		if (i==1)
+			Main.fmToMenu();
+		if (i==2)
+			Main.fmToMenu();
+	}
+	
+	protected static void changeIndex(int i) {
+		if (i==1)
+			index=1;
+		if (i==2)
+			index=2;
+		if (i==3)
+			index=3;
+		if (i==4)
+			index=4;
+		if (i==5)
+			index=5;
 	}
 }
