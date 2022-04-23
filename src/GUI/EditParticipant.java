@@ -4,11 +4,12 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ModifyParticipant extends JPanel {
+public class EditParticipant extends JPanel {
 	private JTextField tfPassword;
 	private JButton btnConfirm;
 	private JButton btnReturn;
@@ -18,8 +19,13 @@ public class ModifyParticipant extends JPanel {
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
 	private static int index;
+	private static JLabel lblMessageAdd;
+	private static JLabel lblMessageMdf;
+	private static JLabel lblMessageDlt;
+	private static JLabel lblMessageCsl;
 
-	public ModifyParticipant() {
+
+	public EditParticipant() {
 		JLabel lblLastName = new JLabel("NOM ");
 		lblLastName.setBounds(200, 206, 74, 34);
 		lblLastName.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
@@ -93,6 +99,32 @@ public class ModifyParticipant extends JPanel {
 		JLabel lblPassword = new JLabel("MDP");
 		lblPassword.setBounds(200, 451, 74, 34);
 		lblPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		
+		JLabel lblMessageAdd = new JLabel("AJOUTER UN PARTICIPANT ");
+		lblMessageAdd.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessageAdd.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		lblMessageAdd.setBounds(290, 151, 422, 38);
+		add(lblMessageAdd);
+
+		JLabel lblMessageMdf = new JLabel("MODIFIER UN PARTICIPANT ");
+		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		lblMessageMdf.setBounds(295, 151, 392, 38);
+		add(lblMessageMdf);
+
+		JLabel lblMessageDlt = new JLabel("SUPPRIMER UN PARTICIPANT ");
+		lblMessageDlt.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessageDlt.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		lblMessageDlt.setBounds(262, 151, 469, 38);
+		add(lblMessageDlt);
+
+		JLabel lblMessageCsl = new JLabel("CONSULTER UN PROFIL ");
+		lblMessageCsl.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessageCsl.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		lblMessageCsl.setBounds(177, 151, 673, 38);
+		add(lblMessageCsl);
+
+
 		setLayout(null);
 		add(btnConfirm);
 		add(btnReturn);
@@ -123,15 +155,29 @@ public class ModifyParticipant extends JPanel {
 	}
 	
 	protected static void changeIndex(int i) {
-		if (i==1)
-			index=1;
-		if (i==2)
-			index=2;
-		if (i==3)
-			index=3;
-		if (i==4)
-			index=4;
-		if (i==5)
-			index=5;
+		if (i==0) {
+			lblMessageAdd.setVisible(true);
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(false);
+		}
+		if (i==1) {
+			lblMessageAdd.setVisible(false);
+			lblMessageMdf.setVisible(true);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(false);
+		}
+		if (i==2) {
+			lblMessageAdd.setVisible(false);
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(true);
+			lblMessageCsl.setVisible(false);
+		}
+		if (i==3) {
+			lblMessageAdd.setVisible(false);
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(true);
+		}
 	}
 }

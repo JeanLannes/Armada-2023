@@ -11,7 +11,7 @@ public class Main {
 	static SignIn si = new SignIn();
 	static Menu menu = new Menu();
 	static FindParticipant fp = new FindParticipant();
-	static ModifyParticipant mp = new ModifyParticipant();
+	static EditParticipant mp = new EditParticipant();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,6 +95,12 @@ public class Main {
 		mp.setVisible(false);
 		f.setContentPane(menu);
 		menu.setVisible(true);
+	}
+
+	public static void menuToMp() {
+		menu.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
 	}
 	
 }

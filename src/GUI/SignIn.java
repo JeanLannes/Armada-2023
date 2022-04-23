@@ -37,6 +37,7 @@ public class SignIn extends JPanel {
 				/*
 				 * RECUPERE LE TEXTE DES DIFFERENTS CHAMPS
 				 */
+				
 				activitySI = tfActivity.getText();
 				lastNameSI = tfLastName.getText();
 				FirstNameSI = tfFirstName.getText();

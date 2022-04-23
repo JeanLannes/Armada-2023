@@ -9,7 +9,17 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Menu extends JPanel {
-	
+	JButton btnModifyParcipant;
+	JButton btnDeleteParticipant;
+	JButton btnSeeAProfil;
+	JButton btnInscriptionManagment;
+	JButton btnAssignLocation;
+	JButton btnReturn;
+	JButton btnSeeProfil;
+	JButton btnCompleteProfil;
+	JButton modifyDescriptionSheet;
+	JButton insertDescriptionSheet;
+	JButton btnAddParticipant;
 	public Menu() {
 		
 		JLabel lblEsigelec = new JLabel("ESIGELEC");
@@ -20,7 +30,14 @@ public class Menu extends JPanel {
 		lblArmada.setBounds(673, 100, 207, 67);
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
-		JButton btnModifyParcipant = new JButton("MODIFIER UN PARTICIPANT");
+		btnAddParticipant = new JButton("AJOUTER UN PARTICIPANT");
+		btnAddParticipant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(3, 0);
+			}
+		});
+
+		btnModifyParcipant = new JButton("MODIFIER UN PARTICIPANT");
 		btnModifyParcipant.setBounds(532, 266, 348, 39);
 		btnModifyParcipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -29,7 +46,7 @@ public class Menu extends JPanel {
 		});
 		btnModifyParcipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnDeleteParticipant = new JButton("SUPPRIMER UN PARTICIPANT");
+		btnDeleteParticipant = new JButton("SUPPRIMER UN PARTICIPANT");
 		btnDeleteParticipant.setBounds(532, 315, 348, 39);
 		btnDeleteParticipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -38,7 +55,7 @@ public class Menu extends JPanel {
 		});
 		btnDeleteParticipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnSeeAProfil = new JButton("CONSULTER UN PROFIL");
+		btnSeeAProfil = new JButton("CONSULTER UN PROFIL");
 		btnSeeAProfil.setBounds(530, 364, 350, 39);
 		btnSeeAProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -47,15 +64,15 @@ public class Menu extends JPanel {
 		});
 		btnSeeAProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");
+		btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");
 		btnInscriptionManagment.setBounds(530, 413, 350, 39);
 		btnInscriptionManagment.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");
+		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");
 		btnAssignLocation.setBounds(530, 462, 350, 39);
 		btnAssignLocation.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnReturn = new JButton("RETOUR");
+		btnReturn = new JButton("RETOUR");
 		btnReturn.setBounds(430, 530, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -64,21 +81,26 @@ public class Menu extends JPanel {
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
-		JButton btnSeeProfil = new JButton("CONSULTER SON PROFIL");
-		btnSeeProfil.setBounds(200, 266, 314, 39);
+		btnSeeProfil = new JButton("CONSULTER SON PROFIL");
+		btnSeeProfil.setBounds(200, 217, 314, 39);
 		btnSeeProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton btnCompleteProfil = new JButton("COMPLETER UN PROFIL");
-		btnCompleteProfil.setBounds(200, 315, 314, 39);
+		btnCompleteProfil = new JButton("COMPLETER UN PROFIL");
+		btnCompleteProfil.setBounds(200, 266, 314, 39);
 		btnCompleteProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton requestPass = new JButton("FAIRE UNE DEMANDE DE LAISSEZ-PASSER");
-		requestPass.setBounds(198, 364, 314, 39);
-		requestPass.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");
+		modifyDescriptionSheet.setBounds(200, 315, 314, 39);
+		modifyDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		JButton consultPass = new JButton("CONSULTER UNE DEMANDE");
-		consultPass.setBounds(198, 413, 314, 39);
-		consultPass.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		insertDescriptionSheet = new JButton("MODIFIER UNE FICHE DESCRIPTIVE");
+		insertDescriptionSheet.setBounds(200, 364, 314, 39);
+		insertDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+			
+		btnAddParticipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		btnAddParticipant.setBounds(532, 217, 348, 39);
+		add(btnAddParticipant);
+
 		setLayout(null);
 		add(lblEsigelec);
 		add(lblArmada);
@@ -86,12 +108,13 @@ public class Menu extends JPanel {
 		add(btnModifyParcipant);
 		add(btnCompleteProfil);
 		add(btnDeleteParticipant);
-		add(requestPass);
+		add(modifyDescriptionSheet);
 		add(btnSeeAProfil);
-		add(consultPass);
+		add(insertDescriptionSheet);
 		add(btnInscriptionManagment);
 		add(btnAssignLocation);
 		add(btnReturn);
+
 	}
 
 		/*
@@ -103,7 +126,11 @@ public class Menu extends JPanel {
 		if (i==2) {
 			Main.menuToFp();
 			FindParticipant.changeIndex(j);
-			ModifyParticipant.changeIndex(j);
+			EditParticipant.changeIndex(j);
+		}		
+		if (i==3) {
+			Main.menuToMp();
+			EditParticipant.changeIndex(j);
 		}
 	}
 	
@@ -123,4 +150,37 @@ public class Menu extends JPanel {
 	protected void restriction() {
 
 	}
+	
+	/*
+	 * Supprime les boutons d'un compte non admin
+	 */
+	protected void admin() {
+		modifyDescriptionSheet.setVisible(false);
+		insertDescriptionSheet.setVisible(false);
+		btnSeeProfil.setVisible(false);
+		btnCompleteProfil.setVisible(false);
+		btnAddParticipant.setVisible(true);
+		btnModifyParcipant.setVisible(true);
+		btnSeeAProfil.setVisible(true);
+		btnDeleteParticipant.setVisible(true);
+		btnInscriptionManagment.setVisible(true);
+		btnAssignLocation.setVisible(true);
+	}
+
+	/*
+	 * Supprime les boutons d'un compte non participant
+	 */
+	protected void participant() {
+		modifyDescriptionSheet.setVisible(true);
+		insertDescriptionSheet.setVisible(true);
+		btnSeeProfil.setVisible(true);
+		btnCompleteProfil.setVisible(true);
+		btnAddParticipant.setVisible(false);
+		btnModifyParcipant.setVisible(false);
+		btnSeeAProfil.setVisible(false);
+		btnDeleteParticipant.setVisible(false);
+		btnInscriptionManagment.setVisible(false);
+		btnAssignLocation.setVisible(false);
+	}
+
 }
