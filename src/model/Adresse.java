@@ -14,22 +14,31 @@ public class Adresse {
 	
 	}
 	
+	/**
+	 * Renvoie les infos de l'adresse dans une chaine de caractere
+	 * @return String 
+	 */
+	public String toString() {
+		return "Plaisancier [ref : " + idAdresse + ", " + adresse + "]";
+	}
 	
-	
+	//GETTER 
 	public int getIdAdresse() {
 		return idAdresse;
-	}
-	public void setIdAdresse(int idAdresse) {
-		this.idAdresse = idAdresse;
 	}
 	public String getAdresse() {
 		return adresse;
 	}
+	
+	//SETTER
+	public void setIdAdresse(int idAdresse) {
+		this.idAdresse = idAdresse;
+	}
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
-	public String toString() {
-		return "Plaisancier [ref : " + idAdresse + ", " + adresse + "]";
-	}
+	
+	
+
 
 }

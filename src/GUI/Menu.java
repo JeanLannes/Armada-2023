@@ -120,9 +120,11 @@ public class Menu extends JPanel {
 		add(btnAddParticipant);
 	}
 
-		/*
-		 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
-		 */
+	/**
+	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+	 * @param i
+	 * @param j
+	 */
 	protected void change(int i, int j) {
 		if (i==1)
 			Main.menuToWel();

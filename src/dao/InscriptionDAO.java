@@ -51,7 +51,7 @@ public class InscriptionDAO extends ConnectionDAO {
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Ce idPersonneMorale existe deja. Ajout impossible !");
+				System.out.println("Erreur !");
 			else
 				e.printStackTrace();
 		} finally {

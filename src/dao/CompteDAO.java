@@ -3,7 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import GUI.EditParticipant;
 import model.*;
 
 /**
@@ -23,8 +24,61 @@ public class CompteDAO extends ConnectionDAO {
 	}
 
 	/**
+	 * Permet d'ajouter un compte à la BDD
+	 * @param compte Objet COMPTE comprenant les informations donnees par l'admin
+	 * @return Compte
+	 */
+	public static int add(Compte compte) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int returnValue = 0;
+		ResultSet rs = null;
+		
+		// connexion a la base de donnees
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Verifie que l'id n'est pas deja utilise
+			
+			ps = con.prepareStatement("SELECT * FROM compte WHERE IDCOMPTE = ?");
+			ps.setInt   (1, compte.getId());
+			rs = ps.executeQuery();
+			if(!rs.next()) {
+				// Insert dans la BDD le nouveau participant
+				ps = con.prepareStatement("INSERT INTO compte (IDCOMPTE, MAILCOMPTE, MOTDEPASSE) VALUES (?, ?, ?)");			
+				ps.setInt   (1, compte.getId());
+				ps.setString(2, compte.getMail());
+				ps.setString(3, compte.getPassword());
+				rs = ps.executeQuery();
+				rs.next();
+			} else 
+				EditParticipant.reject(1);
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
 	 * Cette methode sert a obtenir l'id max dans la BDD. Cela permet de donner un nouvel id non-utilise.
-	 * @return id 
+	 * @return int
 	 */
 	public static int getMaxID() {
 		Connection con = null;
@@ -66,6 +120,12 @@ public class CompteDAO extends ConnectionDAO {
 		return id;
 	}
 
+	/**
+	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP
+	 * @param mail MAIL DU COMPTE 
+	 * @param password MOT DE PASSE DU COMPTE 
+	 * @return Compte
+	 */
 	public static Compte get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -115,10 +175,10 @@ public class CompteDAO extends ConnectionDAO {
 	}
 	
 	/**
-	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP
-	 * @param mail MAIL DU COMPTE ORGANISATEUR
-	 * @param password MOT DE PASSE DU COMPTE ORGANISATEUR
-	 * @return Organisateur
+	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP : Cette méthode sert de vérification pour se connecter au programme
+	 * @param mail MAIL DU COMPTE 
+	 * @param password MOT DE PASSE DU COMPTE
+	 * @return Compte
 	 */
 	public static Compte SignIn (String mail, String password) {
 		Connection con = null;

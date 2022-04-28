@@ -8,8 +8,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class FindParticipant extends JPanel {
 	private JTextField tfId;
 	private JLabel lblFirstName;
@@ -23,6 +23,7 @@ public class FindParticipant extends JPanel {
 	private static JLabel lblMessageCsl;
 
 	public FindParticipant() {
+		setLayout(null);
 		JLabel lblLastName = new JLabel("NOM ");
 		lblLastName.setBounds(206, 322, 74, 38);
 		lblLastName.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
@@ -55,16 +56,6 @@ public class FindParticipant extends JPanel {
 		tfLastName.setBounds(391, 310, 482, 50);
 		tfLastName.setColumns(10);
 		
-		setLayout(null);
-		add(lblEsigelec);
-		add(lblArmada);
-		add(lblLastName);
-		add(lblId);
-		add(lblFirstName);
-		add(tfFirstName);
-		add(tfId);
-		add(tfLastName);
-		
 		btnConfirm = new JButton("VALIDER");
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnConfirm.setBounds(250, 530, 200, 51);
@@ -73,7 +64,6 @@ public class FindParticipant extends JPanel {
 				change(2);
 			}
 		});
-		add(btnConfirm);
 		
 		btnReturn = new JButton("RETOUR");
 		btnReturn.addActionListener(new ActionListener() {
@@ -83,29 +73,41 @@ public class FindParticipant extends JPanel {
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnReturn.setBounds(631, 530, 200, 51);
-		add(btnReturn);
 		
 		lblMessageMdf = new JLabel("QUEL PARTICIPANT SOUHAITEZ-VOUS MODIFIER ?");
 		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessageMdf.setBounds(200, 211, 673, 38);
-		add(lblMessageMdf);
 
 		lblMessageDlt = new JLabel("QUEL PARTICIPANT SOUHAITEZ-VOUS SUPPRIMER ?");
 		lblMessageDlt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageDlt.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessageDlt.setBounds(200, 211, 673, 38);
-		add(lblMessageDlt);
 
 		lblMessageCsl = new JLabel("QUEL PROFIL SOUHAITEZ-VOUS CONSULTER ?");
 		lblMessageCsl.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageCsl.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessageCsl.setBounds(200, 211, 673, 38);
+
+		//
+		add(lblEsigelec);
+		add(lblArmada);
+		add(lblLastName);
+		add(lblId);
+		add(lblFirstName);
+		add(tfFirstName);
+		add(tfId);
+		add(tfLastName);
+		add(btnConfirm);
+		add(btnReturn);
+		add(lblMessageMdf);
+		add(lblMessageDlt);
 		add(lblMessageCsl);
 	}
 	
-	/*
+	/**
 	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
+	 * @param i
 	 */
 	protected void change(int i) {
 		if (i==1)
@@ -114,6 +116,10 @@ public class FindParticipant extends JPanel {
 			Main.fpToMp();
 	}
 	
+	/**
+	 * Permet d'adapter le design de la page en fonction de l'action souhaitée par l'admin
+	 * @param i
+	 */
 	protected static void changeIndex(int i) {
 		if (i==1) {
 			lblMessageMdf.setVisible(true);

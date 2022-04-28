@@ -2,22 +2,35 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import dao.CompteDAO;
+import dao.OrganisateurDAO;
+import dao.PersonneDAO;
+import model.Compte;
+import model.Personne;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+@SuppressWarnings("serial")
 public class EditParticipant extends JPanel {
-	private JTextField tfPassword;
 	private JButton btnConfirm;
 	private JButton btnReturn;
 	private JTextField tfId;
-	private JTextField tfParticipant;
 	private JTextField tfMail;
+	private JTextField tfPassword;
+	private JTextField tfParticipant;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
+	private JTextField tfbirthday;
 	private static int index;
 	private static JLabel lblMessageAdd;
 	private static JLabel lblMessageMdf;
@@ -26,6 +39,7 @@ public class EditParticipant extends JPanel {
 
 
 	public EditParticipant() {
+
 		JLabel lblLastName = new JLabel("NOM ");
 		lblLastName.setBounds(200, 206, 74, 34);
 		lblLastName.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
@@ -39,20 +53,27 @@ public class EditParticipant extends JPanel {
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
 		tfPassword = new JTextField();
-		tfPassword.setBounds(391, 446, 482, 39);
+		tfPassword.setBounds(391, 460, 482, 39);
 		tfPassword.setColumns(10);
 		
 		btnConfirm = new JButton("VALIDER");
-		btnConfirm.setBounds(250, 530, 200, 51);
+		btnConfirm.setBounds(250, 544, 200, 51);
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				change(2);
+				if (index==0) {	
+					//AJOUTE UN PARTICIPANT/COMPTE DANS LA BDD
+					Compte cpt = new Compte(Integer.parseInt(tfId.getText()), tfPassword.getText(), tfMail.getText());
+					CompteDAO.add(cpt);	
+					Personne per = new Personne(Integer.parseInt(tfId.getText()), tfFirstName.getText(), tfLastName.getText(), Integer.parseInt(tfParticipant.getText()), tfbirthday.getText());
+					PersonneDAO.add(per);
+				}
+				change(2);	//RETOURNE AU MENU
 			}
 		});
 		
 		btnReturn = new JButton("RETOUR");
-		btnReturn.setBounds(631, 530, 200, 51);
+		btnReturn.setBounds(631, 544, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(1);
@@ -61,11 +82,11 @@ public class EditParticipant extends JPanel {
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
 		tfId = new JTextField();
-		tfId.setBounds(391, 397, 482, 39);
+		tfId.setBounds(391, 411, 482, 39);
 		tfId.setColumns(10);
 		
 		tfParticipant = new JTextField();
-		tfParticipant.setBounds(391, 348, 482, 39);
+		tfParticipant.setBounds(391, 358, 141, 39);
 		tfParticipant.setColumns(10);
 		
 		tfMail = new JTextField();
@@ -89,62 +110,80 @@ public class EditParticipant extends JPanel {
 		lblMail.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		
 		JLabel lblParticipant = new JLabel("PARTICIPANT");
-		lblParticipant.setBounds(200, 353, 181, 34);
+		lblParticipant.setBounds(200, 363, 181, 34);
 		lblParticipant.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		
 		JLabel lblId = new JLabel("ID");
-		lblId.setBounds(200, 402, 74, 34);
+		lblId.setBounds(200, 416, 74, 34);
 		lblId.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		
 		JLabel lblPassword = new JLabel("MDP");
-		lblPassword.setBounds(200, 451, 74, 34);
+		lblPassword.setBounds(200, 465, 74, 34);
 		lblPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		
-		JLabel lblMessageAdd = new JLabel("AJOUTER UN PARTICIPANT ");
+		lblMessageAdd = new JLabel("AJOUTER UN PARTICIPANT ");
+		lblMessageAdd.setBounds(290, 151, 422, 38);
 		lblMessageAdd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageAdd.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblMessageAdd.setBounds(290, 151, 422, 38);
-		add(lblMessageAdd);
 
-		JLabel lblMessageMdf = new JLabel("MODIFIER UN PARTICIPANT ");
+		lblMessageMdf = new JLabel("MODIFIER UN PARTICIPANT ");
+		lblMessageMdf.setBounds(295, 151, 392, 38);
 		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblMessageMdf.setBounds(295, 151, 392, 38);
-		add(lblMessageMdf);
 
-		JLabel lblMessageDlt = new JLabel("SUPPRIMER UN PARTICIPANT ");
+		lblMessageDlt = new JLabel("SUPPRIMER UN PARTICIPANT ");
+		lblMessageDlt.setBounds(262, 151, 469, 38);
 		lblMessageDlt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageDlt.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblMessageDlt.setBounds(262, 151, 469, 38);
-		add(lblMessageDlt);
 
-		JLabel lblMessageCsl = new JLabel("CONSULTER UN PROFIL ");
+		lblMessageCsl = new JLabel("CONSULTER UN PROFIL ");
+		lblMessageCsl.setBounds(177, 151, 673, 38);
 		lblMessageCsl.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageCsl.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblMessageCsl.setBounds(177, 151, 673, 38);
-		add(lblMessageCsl);
-
-
+		
+		JLabel lblBirthday = new JLabel("NAISSANCE");
+		lblBirthday.setBounds(542, 363, 147, 34);
+		lblBirthday.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		setLayout(null);
+		
+		tfbirthday = new JTextField();
+		tfbirthday.setBounds(697, 358, 176, 39);
+		tfbirthday.setColumns(10);
+		
+		add(tfbirthday);
+		add(lblMessageDlt);
+		add(lblMessageCsl);
+		add(lblMessageAdd);
+		add(lblEsigelec);
+		add(lblMessageMdf);
+		add(lblArmada);
+		add(lblLastName);
+		add(tfLastName);
+		add(lblFirstName);
+		add(tfFirstName);
+		add(lblMail);
+		add(tfMail);
+		add(lblParticipant);
+		add(tfParticipant);
+		add(lblBirthday);
+		add(lblId);
+		add(tfId);
+		add(lblPassword);
+		add(tfPassword);
 		add(btnConfirm);
 		add(btnReturn);
-		add(lblLastName);
-		add(lblMail);
-		add(lblId);
-		add(lblPassword);
-		add(lblFirstName);
-		add(lblParticipant);
-		add(tfMail);
-		add(tfParticipant);
-		add(tfId);
-		add(tfPassword);
-		add(tfFirstName);
-		add(tfLastName);
-		add(lblEsigelec);
-		add(lblArmada);
 	}
 	
-	/*
+	
+	/**
+	 * Affiche un message d'erreur
+	 */
+	public static void reject(int i) {
+		if (i==1)
+			JOptionPane.showMessageDialog(lblMessageAdd, "ID déjà utilise. Veuillez en changer.");
+	}
+	
+	/**
 	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
 	 */
 	protected void change(int i) {
@@ -156,6 +195,7 @@ public class EditParticipant extends JPanel {
 	
 	protected static void changeIndex(int i) {
 		if (i==0) {
+			index=0;
 			lblMessageAdd.setVisible(true);
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(false);

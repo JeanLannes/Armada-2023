@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import model.*;
 
 /**
- * Classe d'acces aux donnees contenues dans la table PersonneMorale
+ * Classe d'acces aux donnees contenues dans la table Adresse
  * 
  * @author BA - Papa Amath
  * @version 1.0
@@ -16,19 +16,16 @@ import model.*;
 
 public class AdresseDAO extends ConnectionDAO {
 	/**
-	 * Constructor
-	 * 
+	 * Constructeur
 	 */
 	public AdresseDAO() {
 		super();
 	}
 
 	/**
-	 * Permet d'ajouter une personne morale dans la table PersonneMorale. Le mode
-	 * est auto-commit par defaut : chaque insertion est validee
-	 * 
-	 * @param adresse la personne Morale a ajouter
-	 * @return retourne le nombre de lignes ajoutees dans la table
+	 * Permet d'ajouter une adresse dans la BDD. 
+	 * @param adresse l'adresse a ajouter
+	 * @return int retourne le nombre de lignes ajoutees dans la table
 	 */
 	public int add(Adresse adresse) {
 		Connection con = null;
@@ -74,13 +71,11 @@ public class AdresseDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de modifier une personne morale dans la table PersonneMorale. Le mode
-	 * est auto-commit par defaut : chaque modification est validee
-	 * 
-	 * @param Adresse la personneMorale à modifier
-	 * @return retourne le nombre de lignes modifiees dans la table
+	 * Permet de modifier une adresse dans la BDD. 
+	 * @param adresse l'adresse a modifier
+	 * @return int
 	 */
-	public int update(Adresse Adresse) {
+	public int update(Adresse adresse) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -122,12 +117,9 @@ public class AdresseDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de supprimer une personneMorale dans la table PersonneMorale. Si ce
-	 * dernier est référencé dans d'autre table, la suppression n'aura pas lieu. Le
-	 * mode est auto-commit par defaut : chaque suppression est validee
-	 * 
-	 * @param Adresse la personneMorale à supprimer
-	 * @return retourne le nombre de lignes supprimees dans la table
+	 * Permet de supprimer une adresse dans la BDD. 
+	 * @param adresse l'adresse a supprimer
+	 * @return int
 	 */
 	public int delete(Adresse Adresse) {
 		Connection con = null;
@@ -172,11 +164,9 @@ public class AdresseDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de recuperer une personneMoralel à partir de son ID
-	 * 
-	 * @param reference la reference de la personne Morale a récupérer
-	 * @return la personne Morale trouve; null si aucune personne Morale ne
-	 *         correspond a cette immatriculation
+	 * Permet d'obtenir une adresse dans la BDD. 
+	 * @param idAdresse id de l'adresse a obtenir
+	 * @return Adresse 
 	 */
 	public Adresse get(int idAdresse) {
 		Connection con = null;
