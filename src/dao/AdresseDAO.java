@@ -223,7 +223,9 @@ public class AdresseDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-
+	
+	
+	/*
 	// main permettant de tester la classe (pour des test unitaires)
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
@@ -269,5 +271,5 @@ public class AdresseDAO extends ConnectionDAO {
 		System.out.println();
 
 	}
-
+	*/
 }

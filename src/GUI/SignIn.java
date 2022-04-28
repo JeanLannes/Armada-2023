@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+import dao.InscriptionDAO;
+import model.Inscription;
+
 public class SignIn extends JPanel {
-	private JTextField tfInterest;
 	private JTextField tfActivity;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
@@ -19,10 +21,11 @@ public class SignIn extends JPanel {
 	
 	private String activitySI;
 	private String lastNameSI;
-	private String FirstNameSI;
+	private String firstNameSI;
 	private String mailSI;
-	/*
-	 * Genere une page d'inscrption
+	
+	/**
+	 * Genere une page d'inscription
 	 */
 	public SignIn() {
 		this.setLayout(null);
@@ -30,25 +33,17 @@ public class SignIn extends JPanel {
 		JButton btnAccept = new JButton("VALIDER");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* 
-				 *  A MODIFIER : CETTE METHODE SE DECLANCHE LORSQUE QU'ON CLIQUE SUR LE BOUTON <<VALIDER>>
-				 */
-				
-				/*
-				 * RECUPERE LE TEXTE DES DIFFERENTS CHAMPS
-				 */
-				
+				//Recuperation des infos dans les zones de texte
 				activitySI = tfActivity.getText();
 				lastNameSI = tfLastName.getText();
-				FirstNameSI = tfFirstName.getText();
+				firstNameSI = tfFirstName.getText();
 				mailSI = tfMail.getText();
 				
 				if (verifytf()) {
-					
-					//			/!\ C'EST ICI QU'IL FAUT SE CONNECTER A LA BDD /!\
-					
-					accepted(); // APPEL UN MESSAGE DE VALIDATION - CE MESSAGE DOIT ETRE AFFICHE SSI LE COMPTE CREE N'EXISTE PAS ENCORE & SSI LA DEMANDE D'INSCRIPTION EST BIEN DANS LA BDD
-					change(1); // RETOURNE A LA PAGE D'ACCUEIL
+					Inscription ins = new Inscription(InscriptionDAO.getMaxID()+1, firstNameSI, lastNameSI, mailSI, activitySI);
+					InscriptionDAO.add(ins); // Ajout d'une nouvelle inscription dans la BDD
+					accepted(); // Message de validation
+					change(1); // Retour a la page d'accueil
 				}
 			}
 		});
@@ -86,11 +81,6 @@ public class SignIn extends JPanel {
 		lblMail.setBounds(193, 306, 95, 38);
 		add(lblMail);
 		
-		JLabel lblInterest = new JLabel("MOTIVATION :");
-		lblInterest.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
-		lblInterest.setBounds(193, 375, 207, 38);
-		add(lblInterest);
-		
 		JLabel lblEsigelec = new JLabel("ESIGELEC");
 		lblEsigelec.setBounds(200, 100, 147, 67);
 		lblEsigelec.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
@@ -100,11 +90,6 @@ public class SignIn extends JPanel {
 		lblArmada.setBounds(657, 100, 207, 67);
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		add(lblArmada);
-		
-		tfInterest = new JTextField();
-		tfInterest.setColumns(10);
-		tfInterest.setBounds(410, 377, 456, 50);
-		add(tfInterest);
 		
 		tfActivity = new JTextField();
 		tfActivity.setColumns(10);
@@ -132,7 +117,7 @@ public class SignIn extends JPanel {
 	 * Verifie si tout les champs sont remplis 
 	 */
 	protected boolean verifytf() {
-        if (!activitySI.isEmpty() && !lastNameSI.isEmpty() && !FirstNameSI.isEmpty() & !mailSI.isEmpty())
+        if (!activitySI.isEmpty() && !lastNameSI.isEmpty() && !firstNameSI.isEmpty() & !mailSI.isEmpty())
         	return true;
         JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
         return false;

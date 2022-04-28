@@ -2,7 +2,8 @@ package GUI;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.RootPaneContainer;
+
+import dao.ConnectionDAO;
 
 public class Main {
 
@@ -27,6 +28,7 @@ public class Main {
 					//On affiche le contenue de la page d'acceuil
 					f.setContentPane(wel);
 					
+					new ConnectionDAO();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -34,7 +36,7 @@ public class Main {
 		});
 	}
 	
-	/*
+	/**
 	 * Remplace le contenue de la page d'acceuil par celui de la page d'inscription
 	 */
 	public static void welToSi() {
@@ -43,7 +45,7 @@ public class Main {
 		si.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * Remplace le contenue de la page d'inscription par celui de la page d'acceuil
 	 */
 	public static void siToWel() {
@@ -52,7 +54,7 @@ public class Main {
 		wel.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * Remplace le contenue de la page d'acceuil par celui du menu principal
 	 */
 	public static void welToMenu() {
@@ -61,7 +63,7 @@ public class Main {
 		menu.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * Remplace le contenue du menu par celui de la page d'accueil
 	 */
 	public static void menuToWel() {
@@ -70,7 +72,7 @@ public class Main {
 		wel.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * Remplace le contenue du menu par celui de la page dédiée à la recherche 
 	 */
 	public static void menuToFp() {
@@ -79,6 +81,9 @@ public class Main {
 		fp.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page FindParticipant par celui du menu
+	 */
 	public static void fpToMenu() {
 		fp.setVisible(false);
 		f.setContentPane(menu);
