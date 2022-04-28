@@ -28,6 +28,7 @@ public class CompteDAO extends ConnectionDAO {
 	 * @param compte Objet COMPTE comprenant les informations donnees par l'admin
 	 * @return Compte
 	 */
+	@SuppressWarnings("resource")
 	public static int add(Compte compte) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -45,10 +46,10 @@ public class CompteDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			if(!rs.next()) {
 				// Insert dans la BDD le nouveau participant
-				ps = con.prepareStatement("INSERT INTO compte (IDCOMPTE, MAILCOMPTE, MOTDEPASSE) VALUES (?, ?, ?)");			
+				ps = con.prepareStatement("INSERT INTO compte (IDCOMPTE, MOTDEPASSE, MAILCOMPTE) VALUES (?, ?, ?)");			
 				ps.setInt   (1, compte.getId());
-				ps.setString(2, compte.getMail());
-				ps.setString(3, compte.getPassword());
+				ps.setString(2, compte.getPassword());
+				ps.setString(3, compte.getMail());
 				rs = ps.executeQuery();
 				rs.next();
 			} else 
@@ -221,5 +222,40 @@ public class CompteDAO extends ConnectionDAO {
 			}
 		}
 		return returnValue;
+	}
+
+	public static void update(Compte cpt) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		// connexion a la base de donnees
+		try {
+
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Requete
+			ps = con.prepareStatement("UPDATE compte set MOTDEPASSE = ?, MAILCOMPTE = ?  WHERE IDCOMPTE = ?");
+			ps.setString(1, cpt.getPassword());
+			ps.setString(2, cpt.getMail());
+			ps.setInt(3, cpt.getId());
+			// Execution de la requete
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
 	}
 }

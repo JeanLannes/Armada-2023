@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author BA - Papa Amath
+ * @version 1.0
+ */
 public class Adresse {
 	private int idAdresse;
 	private String adresse;

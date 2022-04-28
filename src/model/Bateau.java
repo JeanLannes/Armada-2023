@@ -1,6 +1,9 @@
-package model;
+package model; 
 
-
+/**
+ * @author BA - Papa Amath
+ * @version 1.0
+ */
 public class Bateau {
 	
 	private int IDBateau;
@@ -31,102 +34,69 @@ public class Bateau {
 		
 	}
 
-
-
-	public int getIDBateau() {
-		return IDBateau;
-	}
-
-
-
-	public void setIDBateau(String immatriculation) {
-		this.dateCreation = immatriculation;
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-	public String getPavillon() {
-		return pavillon;
-	}
-
-
-
-	public void setPavillon(String pavillon) {
-		this.pavillon = pavillon;
-	}
-
-
-
-	public String getTypeBateau() {
-		return typeBateau;
-	}
-
-
-
-	public void setTypeBateau(String typeBateau) {
-		this.typeBateau = typeBateau;
-	}
-	
-	@Override
+	/**
+	 * Renvoie les infos du bateau dans une chaine de caractere
+	 * @return String 
+	 */
 	public String toString() {
 		return "Bateau [ref : " + IDBateau + ", " + name
 				+ ", "+tailleBateau+ ", " + pavillon +", "+ capitaine +", "+ immatriculation+", "+typeBateau+", "+ dateCreation+"]";
 	}
-
-
-
+	//GETTER
+	public int getIDBateau() {
+		return IDBateau;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getPavillon() {
+		return pavillon;
+	}
+	public String getTypeBateau() {
+		return typeBateau;
+	}
 	public Plaisancier getPlaisancier() {
 		return plaisancier;
 	}
-
-
-
-	public void setPlaisancier(Plaisancier plaisancier) {
-		this.plaisancier = plaisancier;
-	}
-
 	public String getCapitaine() {
 		return capitaine;
 	}
-
-	public void setCapitaine(String capitaine) {
-		this.capitaine = capitaine;
-	}
-
 	public int getTailleBateau() {
 		return tailleBateau;
 	}
-
-	public void setTailleBateau(int tailleBateau) {
-		this.tailleBateau = tailleBateau;
-	}
-
 	public String getImmatriculation() {
 		return immatriculation;
 	}
-
-	public void setImmatriculation(String immatriculation) {
-		this.immatriculation = immatriculation;
-	}
-
 	public String getDateCreation() {
 		return dateCreation;
 	}
 
+	//SETTER 
+	public void setTypeBateau(String typeBateau) {
+		this.typeBateau = typeBateau;
+	}
+	public void setIDBateau(String immatriculation) {
+		this.dateCreation = immatriculation;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setPavillon(String pavillon) {
+		this.pavillon = pavillon;
+	}
+	public void setPlaisancier(Plaisancier plaisancier) {
+		this.plaisancier = plaisancier;
+	}
+	public void setCapitaine(String capitaine) {
+		this.capitaine = capitaine;
+	}
+	public void setTailleBateau(int tailleBateau) {
+		this.tailleBateau = tailleBateau;
+	}
+	public void setImmatriculation(String immatriculation) {
+		this.immatriculation = immatriculation;
+	}
 	public void setDateCreation(String dateCreation) {
 		this.dateCreation = dateCreation;
 	}
-
 }

@@ -12,33 +12,50 @@ public class Commercant {
 		this.IDcommercant = IDCommercant;
 		this.activite = activite;
 		this.stand = stand;
-		this.familleAcceuil = new FamilleAcceuil();
-		this.personneMorale = new PersonneMorale();
+		this.setFamilleAcceuil(new FamilleAcceuil());
+		this.setPersonneMorale(new PersonneMorale());
 		
 	}
 	
-	
-	public int getIDcommercant() {
-		return IDcommercant;
-	}
-	public void setIDcommercant(int iDcommercant) {
-		IDcommercant = iDcommercant;
-	}
-	public String getStand() {
-		return stand;
-	}
-	public void setStand(String stand) {
-		this.stand = stand;
-	}
-	public String getActivite() {
-		return activite;
-	}
-	public void setActivite(String activite) {
-		this.activite = activite;
-	}
-
+	/**
+	 * Renvoie les infos du commercant dans une chaine de caractere
+	 * @return String 
+	 */
 	public String toString() {
 		return "commercant [ref : " + IDcommercant + ", " + activite + ", "+stand+"]";
 	}
 
+	//GETTER
+	public int getIDcommercant() {
+		return IDcommercant;
+	}
+	public String getStand() {
+		return stand;
+	}
+	public String getActivite() {
+		return activite;
+	}
+	public PersonneMorale getPersonneMorale() {
+		return personneMorale;
+	}
+	public FamilleAcceuil getFamilleAcceuil() {
+		return familleAcceuil;
+	}
+	
+	//SETTER 
+	public void setIDcommercant(int iDcommercant) {
+		IDcommercant = iDcommercant;
+	}
+	public void setStand(String stand) {
+		this.stand = stand;
+	}
+	public void setActivite(String activite) {
+		this.activite = activite;
+	}
+	public void setFamilleAcceuil(FamilleAcceuil familleAcceuil) {
+		this.familleAcceuil = familleAcceuil;
+	}
+	public void setPersonneMorale(PersonneMorale personneMorale) {
+		this.personneMorale = personneMorale;
+	}
 }

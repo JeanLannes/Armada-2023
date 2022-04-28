@@ -3,34 +3,28 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
 import dao.CompteDAO;
-import dao.OrganisateurDAO;
 import dao.PersonneDAO;
 import model.Compte;
 import model.Personne;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+
 @SuppressWarnings("serial")
 public class EditParticipant extends JPanel {
 	private JButton btnConfirm;
 	private JButton btnReturn;
-	private JTextField tfId;
-	private JTextField tfMail;
-	private JTextField tfPassword;
-	private JTextField tfParticipant;
-	private JTextField tfFirstName;
-	private JTextField tfLastName;
-	private JTextField tfbirthday;
+	private static JTextField tfId;
+	private static JTextField tfMail;
+	private static JTextField tfPassword;
+	private static JTextField tfParticipant;
+	private static JTextField tfFirstName;
+	private static JTextField tfLastName;
+	private static JTextField tfbirthday;
 	private static int index;
 	private static JLabel lblMessageAdd;
 	private static JLabel lblMessageMdf;
@@ -67,6 +61,12 @@ public class EditParticipant extends JPanel {
 					CompteDAO.add(cpt);	
 					Personne per = new Personne(Integer.parseInt(tfId.getText()), tfFirstName.getText(), tfLastName.getText(), Integer.parseInt(tfParticipant.getText()), tfbirthday.getText());
 					PersonneDAO.add(per);
+				} else if (index==1) {	
+					//MODIFIE UN PARTICIPANT/COMPTE DANS LA BDD
+					Compte cpt = new Compte(Integer.parseInt(tfId.getText()), tfPassword.getText(), tfMail.getText());
+					CompteDAO.update(cpt);	
+					Personne per = new Personne(Integer.parseInt(tfId.getText()), tfFirstName.getText(), tfLastName.getText(), Integer.parseInt(tfParticipant.getText()), tfbirthday.getText());
+					PersonneDAO.update(per);
 				}
 				change(2);	//RETOURNE AU MENU
 			}
@@ -200,12 +200,15 @@ public class EditParticipant extends JPanel {
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(false);
+			tfId.setEditable(true);
 		}
 		if (i==1) {
+			index=1;
 			lblMessageAdd.setVisible(false);
 			lblMessageMdf.setVisible(true);
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(false);
+			tfId.setEditable(false);
 		}
 		if (i==2) {
 			lblMessageAdd.setVisible(false);
@@ -219,5 +222,21 @@ public class EditParticipant extends JPanel {
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(true);
 		}
+	}
+
+	protected static void showUpdateProfile(int id) {
+		//RECUPERATION DES INFOS
+		Compte cpt = new Compte();
+		cpt=CompteDAO.get(id);
+		Personne per = new Personne();
+		per=PersonneDAO.get(id);
+		//UPDATE GRAPHIQUE DES INFOS 
+		tfId.setText(Integer.toString(id));
+		tfMail.setText(cpt.getMail());
+		tfPassword.setText(cpt.getPassword());
+		tfParticipant.setText(Integer.toString(per.getFunction()));
+		tfFirstName.setText(per.getFirstName());
+		tfLastName.setText(per.getLastName());
+		tfbirthday.setText(per.getBirthday());
 	}
 }

@@ -73,7 +73,7 @@ public class PersonneDAO extends ConnectionDAO {
 	 * @param int id la personne recherchee
 	 * @return Personne
 	 */
-	public Personne get(int id) {
+	public static Personne get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -84,7 +84,7 @@ public class PersonneDAO extends ConnectionDAO {
 			// Tentative de connection
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			// Requête
-			ps = con.prepareStatement("SELECT * FROM inscription WHERE ID = ?");
+			ps = con.prepareStatement("SELECT * FROM personne WHERE ID = ?");
 			ps.setInt(1, id);
 			// Execution de la requête
 			rs = ps.executeQuery();
@@ -116,4 +116,41 @@ public class PersonneDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+
+	public static void update(Personne per) {
+	Connection con = null;
+	PreparedStatement ps = null;
+	// connexion a la base de donnees
+	try {
+
+		// Tentative de connexion
+		con = DriverManager.getConnection(URL, LOGIN, PASS);
+		// Requete
+		ps = con.prepareStatement("UPDATE personne set BIRTHDATE = ?, FIRST_NAME = ?, LAST_NAME = ?, FUNCTION = ?  WHERE ID = ?");
+		ps.setString(1, per.getBirthday());
+		ps.setString(2, per.getFirstName());
+		ps.setString(3, per.getLastName());
+		ps.setInt(4, per.getFunction());
+		ps.setInt(5, per.getId());
+		// Execution de la requete
+		ps.executeUpdate();
+
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		// fermeture du preparedStatement et de la connexion
+		try {
+			if (ps != null) {
+				ps.close();
+			}
+		} catch (Exception ignore) {
+		}
+		try {
+			if (con != null) {
+				con.close();
+			}
+		} catch (Exception ignore) {
+		}
+	}
+}
 }

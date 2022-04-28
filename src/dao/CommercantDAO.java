@@ -7,12 +7,11 @@ import java.sql.SQLException;
 import model.*;
 
 /**
- * Classe d'acces aux donnees contenues dans la table PersonneMorale
+ * Classe d'acces aux donnees contenues dans la table Commercant
  * 
  * @author BA - Papa Amath
  * @version 1.0
  */
-
 public class CommercantDAO extends ConnectionDAO {
 	/**
 	 * Constructor
@@ -25,10 +24,10 @@ public class CommercantDAO extends ConnectionDAO {
 	
 
 	/**
-	 * Permet d'ajouter un commercant  dans la table PersonneMorale. Le mode est
+	 * Permet d'ajouter un commercant  dans la table Commercant. Le mode est
 	 * auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param commercant le commercant  a ajouter
+	 * @param commercant le commercant a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
 	public int add(Commercant commercant) {
@@ -80,7 +79,7 @@ public class CommercantDAO extends ConnectionDAO {
 	 * Permet de modifier une un commercant dans la table commercant. Le mode est
 	 * auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param commercaant la personneMorale à modifier
+	 * @param commercaant Commercant à modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
 	public int update(Commercant commercaant) {
@@ -130,7 +129,7 @@ public class CommercantDAO extends ConnectionDAO {
 	 * est référencé dans d'autre table, la suppression n'aura pas lieu. Le mode est auto-commit
 	 * par defaut : chaque suppression est validee
 	 * 
-	 * @param commercant la personneMorale à supprimer
+	 * @param commercant Commercant à supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(Commercant commercant) {

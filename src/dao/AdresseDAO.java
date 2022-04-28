@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import model.*;
 
 /**
@@ -89,8 +88,8 @@ public class AdresseDAO extends ConnectionDAO {
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("UPDATE adresse set ADRESSE = ? WHERE IDADRESSE = ?");
-			ps.setString(1, Adresse.getAdresse());
-			ps.setInt(2, Adresse.getIdAdresse());
+			ps.setString(1, adresse.getAdresse());
+			ps.setInt(2, adresse.getIdAdresse());
 
 			// Execution de la requete
 

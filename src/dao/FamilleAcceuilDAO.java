@@ -15,8 +15,7 @@ import model.*;
 
 public class FamilleAcceuilDAO extends ConnectionDAO {
 	/**
-	 * Constructor
-	 * 
+	 * Constructeur
 	 */
 	public FamilleAcceuilDAO()
 	{
