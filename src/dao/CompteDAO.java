@@ -13,7 +13,6 @@ import model.*;
  * @author DURAND Tom
  * @version 1.0
  */
-
 public class CompteDAO extends ConnectionDAO {
 	/**
 	 * Constructeur
@@ -24,7 +23,7 @@ public class CompteDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet d'ajouter un compte à la BDD
+	 * Permet d'ajouter un compte a la BDD
 	 * @param compte Objet COMPTE comprenant les informations donnees par l'admin
 	 * @return Compte
 	 */
@@ -39,10 +38,9 @@ public class CompteDAO extends ConnectionDAO {
 		try {
 			// Tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			// Verifie que l'id n'est pas deja utilise
-			
-			ps = con.prepareStatement("SELECT * FROM compte WHERE IDCOMPTE = ?");
-			ps.setInt   (1, compte.getId());
+			// Verifie que le mail n'est pas deja utilise
+			ps = con.prepareStatement("SELECT * FROM compte WHERE MAILCOMPTE = ?");
+			ps.setString(1, compte.getMail());
 			rs = ps.executeQuery();
 			if(!rs.next()) {
 				// Insert dans la BDD le nouveau participant
@@ -52,11 +50,13 @@ public class CompteDAO extends ConnectionDAO {
 				ps.setString(3, compte.getMail());
 				rs = ps.executeQuery();
 				rs.next();
-			} else 
+			} else {
 				EditParticipant.reject(1);
+				return 2;
+			}
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Erreur !");
+				System.out.println("Erreur : L'id est deja associe");
 			else
 				e.printStackTrace();
 		} finally {
@@ -258,4 +258,45 @@ public class CompteDAO extends ConnectionDAO {
 			}
 		}
 	}
+
+	/**
+	 * Permet de supprimer un compte dans la BDD
+	 * @param id du compte a supprimer
+	 */
+	public static void delete(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		// connexion a la base de donnees
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Requete
+			ps = con.prepareStatement("DELETE FROM compte WHERE IDCOMPTE = ?");
+			ps.setInt(1, id);
+			// Execution de la requete
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-02292"))
+				System.out.println("Suppression impossible !"
+						+ "Supprimer d'abord les références");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+	}
+
 }

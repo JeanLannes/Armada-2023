@@ -67,6 +67,10 @@ public class EditParticipant extends JPanel {
 					CompteDAO.update(cpt);	
 					Personne per = new Personne(Integer.parseInt(tfId.getText()), tfFirstName.getText(), tfLastName.getText(), Integer.parseInt(tfParticipant.getText()), tfbirthday.getText());
 					PersonneDAO.update(per);
+				} else if (index==2) {	
+					//SUPPRIME UN PARTICIPANT/COMPTE DANS LA BDD
+					CompteDAO.delete(Integer.parseInt(tfId.getText()));	
+					PersonneDAO.delete(Integer.parseInt(tfId.getText()));
 				}
 				change(2);	//RETOURNE AU MENU
 			}
@@ -127,12 +131,12 @@ public class EditParticipant extends JPanel {
 		lblMessageAdd.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 
 		lblMessageMdf = new JLabel("MODIFIER UN PARTICIPANT ");
-		lblMessageMdf.setBounds(295, 151, 392, 38);
+		lblMessageMdf.setBounds(315, 151, 392, 38);
 		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 
 		lblMessageDlt = new JLabel("SUPPRIMER UN PARTICIPANT ");
-		lblMessageDlt.setBounds(262, 151, 469, 38);
+		lblMessageDlt.setBounds(285, 151, 469, 38);
 		lblMessageDlt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageDlt.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 
@@ -150,6 +154,7 @@ public class EditParticipant extends JPanel {
 		tfbirthday.setBounds(697, 358, 176, 39);
 		tfbirthday.setColumns(10);
 		
+		//AJOUT DES ELEMENTS GRAPHIQUES
 		add(tfbirthday);
 		add(lblMessageDlt);
 		add(lblMessageCsl);
@@ -193,6 +198,10 @@ public class EditParticipant extends JPanel {
 			Main.fmToMenu();
 	}
 	
+	/**
+	 * Affiche diffentes configuration de la page EditParticipant en fonction de l'action realisee
+	 * @param i
+	 */
 	protected static void changeIndex(int i) {
 		if (i==0) {
 			index=0;
@@ -201,6 +210,12 @@ public class EditParticipant extends JPanel {
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(false);
 			tfId.setEditable(true);
+			tfMail.setEditable(true);
+			tfPassword.setEditable(true);
+			tfParticipant.setEditable(true);
+			tfFirstName.setEditable(true);
+			tfLastName.setEditable(true);
+			tfbirthday.setEditable(true);
 		}
 		if (i==1) {
 			index=1;
@@ -209,21 +224,47 @@ public class EditParticipant extends JPanel {
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(false);
 			tfId.setEditable(false);
+			tfMail.setEditable(true);
+			tfPassword.setEditable(true);
+			tfParticipant.setEditable(true);
+			tfFirstName.setEditable(true);
+			tfLastName.setEditable(true);
+			tfbirthday.setEditable(true);
 		}
 		if (i==2) {
+			index=2;
 			lblMessageAdd.setVisible(false);
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(true);
 			lblMessageCsl.setVisible(false);
+			tfId.setEditable(false);
+			tfMail.setEditable(false);
+			tfPassword.setEditable(false);
+			tfParticipant.setEditable(false);
+			tfFirstName.setEditable(false);
+			tfLastName.setEditable(false);
+			tfbirthday.setEditable(false);
 		}
 		if (i==3) {
 			lblMessageAdd.setVisible(false);
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(true);
+			tfId.setEditable(false);
+			tfId.setEditable(false);
+			tfMail.setEditable(false);
+			tfPassword.setEditable(false);
+			tfParticipant.setEditable(false);
+			tfFirstName.setEditable(false);
+			tfLastName.setEditable(false);
+			tfbirthday.setEditable(false);
 		}
 	}
 
+	/**
+	 * Incrit les informations relatives a un participant dont l'id est en parametre
+	 * @param id
+	 */
 	protected static void showUpdateProfile(int id) {
 		//RECUPERATION DES INFOS
 		Compte cpt = new Compte();

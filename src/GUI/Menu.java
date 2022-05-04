@@ -1,13 +1,11 @@
 package GUI;
 
 import java.awt.Font;
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class Menu extends JPanel {
 	static JButton btnModifyParcipant;
 	static JButton btnDeleteParticipant;
@@ -37,7 +35,7 @@ public class Menu extends JPanel {
 		btnAddParticipant = new JButton("AJOUTER UN PARTICIPANT");		//AJOUT DU BOUTON SE <<AJOUTER UN PARTICIPANT>>	
 		btnAddParticipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				change(3, 0);
+				change(4, 0);
 			}
 		});
 		btnAddParticipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
@@ -74,11 +72,11 @@ public class Menu extends JPanel {
 		btnInscriptionManagment.setBounds(530, 413, 350, 39);
 		btnInscriptionManagment.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");
+		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	//AJOUT DU BOUTON SE <<ATTRIBUER UN EMPLACEMENT>>
 		btnAssignLocation.setBounds(530, 462, 350, 39);
 		btnAssignLocation.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnReturn = new JButton("RETOUR");
+		btnReturn = new JButton("RETOUR");		//AJOUT DU BOUTON DE <<RETOUR>> POUR RETOURNER A L'ECRAN DE CONNECTION
 		btnReturn.setBounds(430, 530, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +125,7 @@ public class Menu extends JPanel {
 	 */
 	protected void change(int i, int j) {
 		if (i==1)
-			Main.menuToWel();
+			Main.menuToWel();	
 		if (i==2) {
 			Main.menuToFp();
 			FindParticipant.changeIndex(j);
@@ -137,6 +135,8 @@ public class Menu extends JPanel {
 			Main.menuToMp();
 			EditParticipant.changeIndex(j);
 		}
+		if (i==4)
+			Main.menuToAdd();
 	}
 	
 	/**

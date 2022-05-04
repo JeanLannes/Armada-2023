@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import dao.InscriptionDAO;
 import model.Inscription;
 
+@SuppressWarnings("serial")
 public class SignIn extends JPanel {
 	private JTextField tfActivity;
 	private JTextField tfFirstName;
@@ -99,7 +100,7 @@ public class SignIn extends JPanel {
 		tfMail.setColumns(10);
 		tfMail.setBounds(287, 306, 200, 50);
 
-
+		//AJOUT DES ELEMENTS GRAPHIQUES
 		add(btnAccept);
 		add(btnReturn);
 		add(lblLastName);
@@ -114,7 +115,8 @@ public class SignIn extends JPanel {
 	}
 
 	/**
-	 * Verifie si tout les champs sont remplis 
+	 * Verifie si tout les champs sont remplis
+	 * @return boolean 
 	 */
 	protected boolean verifytf() {
         if (!activitySI.isEmpty() && !lastNameSI.isEmpty() && !firstNameSI.isEmpty() & !mailSI.isEmpty())

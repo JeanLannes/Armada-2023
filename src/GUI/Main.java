@@ -3,8 +3,6 @@ package GUI;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
-import dao.ConnectionDAO;
-
 public class Main {
 
 	static JFrame f = new JFrame();
@@ -13,6 +11,7 @@ public class Main {
 	static Menu menu = new Menu();
 	static FindParticipant fp = new FindParticipant();
 	static EditParticipant mp = new EditParticipant();
+	static AddParticipant add = new AddParticipant();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -27,8 +26,6 @@ public class Main {
 					f.setVisible(true);
 					//On affiche le contenue de la page d'acceuil
 					f.setContentPane(wel);
-					
-					new ConnectionDAO();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -90,22 +87,49 @@ public class Main {
 		menu.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page FindParticipant par celui de la page EditParticipant
+	 */
 	public static void fpToMp() {
 		fp.setVisible(false);
 		f.setContentPane(mp);
 		mp.setVisible(true);
 	}
-	
+
+	/**
+	 * Remplace le contenue de la page FindParticipant par celui du menu
+	 */
 	public static void fmToMenu() {
 		mp.setVisible(false);
 		f.setContentPane(menu);
 		menu.setVisible(true);
 	}
 
+	/**
+	 * Remplace le contenue du menu par celui de la page EditParticipant
+	 */
 	public static void menuToMp() {
 		menu.setVisible(false);
 		f.setContentPane(mp);
 		mp.setVisible(true);
+	}
+
+	/**
+	 * Remplace le contenue de la page AddParticipant par celui du menu
+	 */
+	public static void addToMenu() {
+		add.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	/**
+	 * Remplace le contenue de la page menu par celui de la page AddParticipant
+	 */
+	public static void menuToAdd() {
+		menu.setVisible(false);
+		f.setContentPane(add);
+		add.setVisible(true);
 	}
 	
 }

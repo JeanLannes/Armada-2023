@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import GUI.EditParticipant;
 import model.*;
 
 /**
@@ -27,6 +29,7 @@ public class PersonneDAO extends ConnectionDAO {
 	 * @param Personne la personne a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
+	@SuppressWarnings("resource")
 	public static int add(Personne personne) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -36,15 +39,22 @@ public class PersonneDAO extends ConnectionDAO {
 		try {
 			// Tentative de connexion
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("INSERT INTO personne (ID, FIRST_NAME, LAST_NAME, FUNCTION, BIRTHDATE) VALUES (?, ?, ?, ?, ?)");
+			// Verifie que le mail n'est pas deja utilise
+			ps = con.prepareStatement("SELECT * FROM personne WHERE ID = ?");
 			ps.setInt(1, personne.getId());
-			ps.setString(2, personne.getFirstName());
-			ps.setString(3, personne.getLastName());
-			ps.setInt(4, personne.getFunction());
-			ps.setString(5, personne.getBirthday());
-			// Execution de la requete
-			returnValue = ps.executeUpdate();
-
+			ResultSet rs=ps.executeQuery();;
+			if(!rs.next()) {
+				// Insert dans la BDD le nouveau participant
+				ps = con.prepareStatement("INSERT INTO personne (ID, FIRST_NAME, LAST_NAME, FUNCTION, BIRTHDATE) VALUES (?, ?, ?, ?, ?)");
+				ps.setInt(1, personne.getId());
+				ps.setString(2, personne.getFirstName());
+				ps.setString(3, personne.getLastName());
+				ps.setInt(4, personne.getFunction());
+				ps.setString(5, personne.getBirthday());
+				// Execution de la requete
+				returnValue = ps.executeUpdate();
+			} else 
+				EditParticipant.reject(1);
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
 				System.out.println("Erreur !");
@@ -118,39 +128,79 @@ public class PersonneDAO extends ConnectionDAO {
 	}
 
 	public static void update(Personne per) {
-	Connection con = null;
-	PreparedStatement ps = null;
-	// connexion a la base de donnees
-	try {
-
-		// Tentative de connexion
-		con = DriverManager.getConnection(URL, LOGIN, PASS);
-		// Requete
-		ps = con.prepareStatement("UPDATE personne set BIRTHDATE = ?, FIRST_NAME = ?, LAST_NAME = ?, FUNCTION = ?  WHERE ID = ?");
-		ps.setString(1, per.getBirthday());
-		ps.setString(2, per.getFirstName());
-		ps.setString(3, per.getLastName());
-		ps.setInt(4, per.getFunction());
-		ps.setInt(5, per.getId());
-		// Execution de la requete
-		ps.executeUpdate();
-
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		// fermeture du preparedStatement et de la connexion
+		Connection con = null;
+		PreparedStatement ps = null;
+		// connexion a la base de donnees
 		try {
-			if (ps != null) {
-				ps.close();
+
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Requete
+			ps = con.prepareStatement("UPDATE personne set BIRTHDATE = ?, FIRST_NAME = ?, LAST_NAME = ?, FUNCTION = ?  WHERE ID = ?");
+			ps.setString(1, per.getBirthday());
+			ps.setString(2, per.getFirstName());
+			ps.setString(3, per.getLastName());
+			ps.setInt(4, per.getFunction());
+			ps.setInt(5, per.getId());
+			// Execution de la requete
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
 			}
-		} catch (Exception ignore) {
-		}
-		try {
-			if (con != null) {
-				con.close();
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
 			}
-		} catch (Exception ignore) {
 		}
 	}
-}
+
+	/**
+	 * Permet de supprimer une personne dans la BDD
+	 * @param id de la personne a supprimer
+	 */
+	public static void delete(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		// connexion a la base de donnees
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Requete
+			ps = con.prepareStatement("DELETE FROM personne WHERE ID = ?");
+			ps.setInt(1, id);
+			// Execution de la requete
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-02292"))
+				System.out.println("Suppression impossible !"
+						+ "Supprimer d'abord les références");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+	}
 }
