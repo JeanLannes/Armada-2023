@@ -2,6 +2,10 @@ package GUI;
 
 import java.awt.Font;
 import javax.swing.*;
+
+import dao.CompteDAO;
+import model.Compte;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -68,11 +72,11 @@ public class Menu extends JPanel {
 		});
 		btnSeeAProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");		//AJOUT DU BOUTON SE <<GERER LES INSCRIPTIONS>>
+		btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");		//AJOUT DU BOUTON <<GERER LES INSCRIPTIONS>>
 		btnInscriptionManagment.setBounds(530, 413, 350, 39);
 		btnInscriptionManagment.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	//AJOUT DU BOUTON SE <<ATTRIBUER UN EMPLACEMENT>>
+		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	//AJOUT DU BOUTON <<ATTRIBUER UN EMPLACEMENT>>
 		btnAssignLocation.setBounds(530, 462, 350, 39);
 		btnAssignLocation.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
@@ -85,19 +89,28 @@ public class Menu extends JPanel {
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
-		btnSeeProfil = new JButton("CONSULTER SON PROFIL");		//AJOUT DU BOUTON SE <<CONSULTER SON PROFIL>>
+		btnSeeProfil = new JButton("CONSULTER SON PROFIL");		//AJOUT DU BOUTON <<CONSULTER SON PROFIL>>
 		btnSeeProfil.setBounds(200, 217, 314, 39);
 		btnSeeProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnCompleteProfil = new JButton("COMPLETER UN PROFIL");		//AJOUT DU BOUTON SE <<COMPLETER UN PROFIL>>
+		
+		btnCompleteProfil = new JButton("COMPLETER UN PROFIL");		//AJOUT DU BOUTON <<COMPLETER UN PROFIL>>
+		btnCompleteProfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(3, 0);
+				Compte cpt = new Compte();
+				cpt = CompteDAO.getWithMail(Main.getMail());	
+				EditParticipant.showUpdateProfile(cpt.getId());
+			}
+		});
 		btnCompleteProfil.setBounds(200, 266, 314, 39);
 		btnCompleteProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON SE <<INSERER UNE FICHE DESCRIPTIVE>>
+		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON <<INSERER UNE FICHE DESCRIPTIVE>>
 		modifyDescriptionSheet.setBounds(200, 315, 314, 39);
 		modifyDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		insertDescriptionSheet = new JButton("MODIFIER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON SE <<MODIFIER UNE FICHE DESCRIPTIVE>>
+		insertDescriptionSheet = new JButton("MODIFIER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON <<MODIFIER UNE FICHE DESCRIPTIVE>>
 		insertDescriptionSheet.setBounds(200, 364, 314, 39);
 		insertDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 

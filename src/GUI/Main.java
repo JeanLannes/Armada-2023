@@ -12,6 +12,7 @@ public class Main {
 	static FindParticipant fp = new FindParticipant();
 	static EditParticipant mp = new EditParticipant();
 	static AddParticipant add = new AddParticipant();
+	static String mailAccount;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -132,4 +133,11 @@ public class Main {
 		add.setVisible(true);
 	}
 	
+	public static String getMail() {
+		return mailAccount;
+	}
+	
+	public static void setMail(String mail) {
+		mailAccount=mail;
+	}
 }

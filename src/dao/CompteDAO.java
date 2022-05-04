@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 import GUI.EditParticipant;
 import model.*;
-
+ 
 /**
  * Classe d'acces aux donnees contenues dans la table Compte
  * 
@@ -139,6 +139,60 @@ public class CompteDAO extends ConnectionDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT * FROM compte WHERE IDCOMPTE = ?");
 			ps.setInt(1, id);
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Compte(rs.getInt("IDCOMPTE"), rs.getString("MOTDEPASSE"), rs.getString("MAILCOMPTE"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		if (returnValue==null)
+			return new Compte(0,"0","0");
+		else 
+			return returnValue;
+	}
+
+		/**
+	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP
+	 * @param mail MAIL DU COMPTE 
+	 * @param password MOT DE PASSE DU COMPTE 
+	 * @return Compte
+	 */
+	public static Compte getWithMail(String mail) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Compte returnValue = null;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM compte WHERE MAILCOMPTE = ?");
+			ps.setString(1, mail);
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
 			rs = ps.executeQuery();

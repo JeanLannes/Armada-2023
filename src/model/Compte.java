@@ -1,9 +1,10 @@
 package model;
-
+ 
 /**
  * @author DURAND Tom
  * @version 1.0
  */
+
 public class Compte {
 	private int id;
 	private String password;

@@ -53,7 +53,7 @@ public class AddParticipant extends JPanel {
 	            Personne per=null;
 	            if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
 	            	cpt = new Compte(CompteDAO.getMaxID()+1,pwdText,userText);
-	            	per = new Personne();
+	            	per = new Personne(0,"0","0",0,"1/1/01");
 	            	per.setId(CompteDAO.getMaxID()+1);
 		            if (CompteDAO.add(cpt)!=2) {	// AJOUTE LE COMPTE DANS LA BDD
 		            	PersonneDAO.add(per);

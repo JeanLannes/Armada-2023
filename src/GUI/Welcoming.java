@@ -41,7 +41,7 @@ public class Welcoming extends JPanel {
 		lblPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		lblPassword.setBounds(206, 326, 96, 67);
 		
-		JButton btnLogIn = new JButton("SE CONNECTER");		//AJOUT DU BOUTON SE <<CONNECTER>>
+		JButton btnLogIn = new JButton("SE CONNECTER");		//AJOUT DU BOUTON <<SE CONNECTER>>
 		btnLogIn.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -50,10 +50,10 @@ public class Welcoming extends JPanel {
 	            Compte cpt=null;
 	            Organisateur org=null;
 	            int test=0;
-	            
 	            if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
 		            cpt=CompteDAO.SignIn(userText, pwdText);	// RECUPERE LE COMPTE S'IL EXISTE DANS LA BDD
 		            org=OrganisateurDAO.SignIn(userText, pwdText);	
+	            	Main.setMail(userText);
 		            if (cpt != null) {
 		            	change(1);	//AFFICHE LE MENU
 		            	Menu.participant(); 	//RESTREINT LE MENU A CELUI D'UN COMPTE PARTICIPANT
@@ -67,7 +67,6 @@ public class Welcoming extends JPanel {
 		            	reject();
 		            }
 	            }
-	            
 			}
 		});
 		

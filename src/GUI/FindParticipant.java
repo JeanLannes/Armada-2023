@@ -78,7 +78,7 @@ public class FindParticipant extends JPanel {
 		String[][] data;
 		data = new String[CompteDAO.getMaxID()][3];    
 		String column[]={"NOM","PRENOM","MAIL"};
-		data=dataEdit(data);
+		//data=dataEdit(data);
 		
 		table = new JTable(data, column);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -95,11 +95,14 @@ public class FindParticipant extends JPanel {
 		add(lblMessageDlt);
 		add(lblMessageCsl);
 		
+		/*
 		JScrollPane js=new JScrollPane(table);
 		js.setVisible(true);
 		add(js);
+		*/
 	}
 	
+	/*
 	private String[][] dataEdit(String[][] data) {
 		Compte cpt= new Compte();
 		Personne per = new Personne();
@@ -117,7 +120,8 @@ public class FindParticipant extends JPanel {
 		}
 		return data;
 	}
-
+	*/
+	
 	/**
 	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
 	 * @param i
