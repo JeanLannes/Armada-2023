@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import model.FamilleAcceuil;
 
 public class Main {
 
@@ -12,6 +13,13 @@ public class Main {
 	static FindParticipant fp = new FindParticipant();
 	static EditParticipant mp = new EditParticipant();
 	static AddParticipant add = new AddParticipant();
+	static DescriptionSheet ds = new DescriptionSheet();
+	static Delegation deleg = new Delegation();
+	static Entreprise ent = new Entreprise();
+	static Commercant com = new Commercant();
+	static Bateau bat = new Bateau();
+	static Famille fa = new Famille();
+	static PersonneMorale pm = new PersonneMorale();
 	static String mailAccount;
 	
 	public static void main(String[] args) {
@@ -131,6 +139,90 @@ public class Main {
 		menu.setVisible(false);
 		f.setContentPane(add);
 		add.setVisible(true);
+	}
+	
+	public static void menuToDs() {
+		menu.setVisible(false);
+		f.setContentPane(ds);
+		ds.setVisible(true);
+	}
+	
+	public static void dsToMenu() {
+		ds.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void mpToDeleg() {
+		mp.setVisible(false);
+		f.setContentPane(deleg);
+		deleg.setVisible(true);
+	}
+	
+	public static void delegToMp() {
+		deleg.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
+	}
+	
+	public static void mpToEnt() {
+		mp.setVisible(false);
+		f.setContentPane(ent);
+		ent.setVisible(true);
+	}
+	
+	public static void entToMp() {
+		ent.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
+	}
+	
+	public static void mpToCom() {
+		mp.setVisible(false);
+		f.setContentPane(com);
+		com.setVisible(true);
+	}
+	
+	public static void comToMp() {
+		com.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
+	}
+	
+	public static void mpToBat() {
+		mp.setVisible(false);
+		f.setContentPane(bat);
+		bat.setVisible(true);
+	}
+	
+	public static void batToMp() {
+		bat.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
+	}
+	
+	public static void mpToFa() {
+		mp.setVisible(false);
+		f.setContentPane(fa);
+		fa.setVisible(true);
+	}
+	
+	public static void faToMp() {
+		fa.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
+	}
+	
+	public static void mpToPm() {
+		mp.setVisible(false);
+		f.setContentPane(pm);
+		pm.setVisible(true);
+	}
+	
+	public static void pmToMp() {
+		pm.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
 	}
 	
 	public static String getMail() {

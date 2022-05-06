@@ -93,10 +93,10 @@ public class PersonneDAO extends ConnectionDAO {
 		try {
 			// Tentative de connection
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			// Requête
+			// Requete
 			ps = con.prepareStatement("SELECT * FROM personne WHERE ID = ?");
 			ps.setInt(1, id);
-			// Execution de la requête
+			// Execution de la requete
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				returnValue = new Personne(rs.getInt("ID"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getInt("FUNCTION"), rs.getString("BIRTHDATE"));

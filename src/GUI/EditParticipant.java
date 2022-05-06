@@ -262,6 +262,22 @@ public class EditParticipant extends JPanel {
 			tfId.setVisible(true);
 			lblId.setVisible(true);
 		}
+		if (i==4) {
+			lblMessageAdd.setVisible(false);
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(true);
+			tfId.setEditable(false);
+			tfId.setEditable(false);
+			tfMail.setEditable(false);
+			tfPassword.setEditable(false);
+			tfParticipant.setEditable(false);
+			tfFirstName.setEditable(false);
+			tfLastName.setEditable(false);
+			tfbirthday.setEditable(false);
+			tfId.setVisible(false);
+			lblId.setVisible(false);
+		}
 	}
 
 	/**
