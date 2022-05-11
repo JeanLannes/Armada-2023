@@ -3,34 +3,33 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import model.*;
 
 /**
- * Classe d'acces aux donnees contenues dans la table Commercant
+ * Classe d'acces aux donnees contenues dans la table HostFamily
  * 
  * @author BA - Papa Amath
  * @version 1.0
  */
-public class CommercantDAO extends ConnectionDAO {
+
+public class HostFamilyDAO extends ConnectionDAO {
 	/**
-	 * Constructor
-	 * 
+	 * Constructeur
 	 */
-	public CommercantDAO()
+	public HostFamilyDAO()
 	{
 		super();
 	}
 	
 
 	/**
-	 * Permet d'ajouter un commercant  dans la table Commercant. Le mode est
+	 * Permet d'ajouter une famille d'acceuil dans la table supplier. Le mode est
 	 * auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param commercant le commercant a ajouter
+	 * @param hostFamily la famille d'acceuil à ajouter 
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(Commercant commercant) {
+	public int add(HostFamily hostFamily) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -43,18 +42,16 @@ public class CommercantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO commercant (IDCOMMERCANT, ACTIVITE, STAND) VALUES (?, ?, ?)");
-			ps.setInt(1, commercant.getIDcommercant());
-			ps.setString(2, commercant.getActivite());
-			ps.setString(3, commercant.getStand());
-			
+			ps = con.prepareStatement("INSERT INTO familleac (IDFAMILLE, NOMBREDEPLACE) VALUES (?, ?)");
+			ps.setInt(1, hostFamily.getIdFamille());
+			ps.setInt(2, hostFamily.getNbPlace());
 	
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("L'ID de ce commercant existe déjà. Ajout impossible !");
+				System.out.println("Cette ID de famille d'acceuil  existe déjà. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {
@@ -76,13 +73,13 @@ public class CommercantDAO extends ConnectionDAO {
 	}
 	
 	/**
-	 * Permet de modifier une un commercant dans la table commercant. Le mode est
+	 * Permet de modifier une famille d'acceuil dans la table HostFamily. Le mode est
 	 * auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param commercaant Commercant à modifier
+	 * @param hostFamily la famille d'acceuil à modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(Commercant commercaant) {
+	public int update(HostFamily hostFamily) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -95,10 +92,9 @@ public class CommercantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE commercant set ACTIVITE = ?, STAND = ?  WHERE IDCOMMERCANT = ?");
-			ps.setString(1, commercaant.getActivite());
-			ps.setString(2, commercaant.getStand());
-			ps.setInt(3, commercaant.getIDcommercant());
+			ps = con.prepareStatement("UPDATE familleac set NOMBREDEPLACE = ? WHERE IDFAMILLE = ?");
+			ps.setInt(1, hostFamily.getNbPlace());
+			ps.setInt(2, hostFamily.getIdFamille());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -125,14 +121,14 @@ public class CommercantDAO extends ConnectionDAO {
 	
 	
 	/**
-	 * Permet de supprimer un commercant dans la table commercant. Si ce dernier
+	 * Permet de supprimer une famille d'acceuil dans la table familleac. Si ce dernier
 	 * est référencé dans d'autre table, la suppression n'aura pas lieu. Le mode est auto-commit
 	 * par defaut : chaque suppression est validee
 	 * 
-	 * @param commercant Commercant à supprimer
+	 * @param hostFamily le fournisseur a supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
-	public int delete(Commercant commercant) {
+	public int delete(HostFamily hostFamily) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -145,8 +141,8 @@ public class CommercantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
 			// a communiquer dans la suppression.
 			// le getter permet de recuperer la valeur de l'ID du fournisseur
-			ps = con.prepareStatement("DELETE FROM commercant WHERE IDCOMMERCANT = ?");
-			ps.setInt(1, commercant.getIDcommercant());
+			ps = con.prepareStatement("DELETE FROM familleac WHERE IDFAMILLE = ?");
+			ps.setInt(1, hostFamily.getIdFamille());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -177,31 +173,31 @@ public class CommercantDAO extends ConnectionDAO {
 
 
 	/**
-	 * Permet de recuperer un commercant à partir de son ID
+	 * Permet de recuperer une famille d'Acceuil à partir de son ID
 	 * 
-	 * @param reference la reference du commercant a récupérer
-	 * @return le commercant  trouve; null si aucune personne Morale ne correspond a
+	 * @param idFamily la reference de la famille d'acceuil a récupérer
+	 * @return la famille d'acceuil trouve; null si aucune famille d'acceuil ne correspond à
 	 *         cette immatriculation
 	 */
-	public Commercant get(int idPersonneMorale) {
+	public static HostFamily get(int idFamily) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Commercant returnValue = null;
+		HostFamily returnValue = null;
 
 		// connexion a la base de donnees
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM commercant WHERE IDCOMMERCANT = ?");
-			ps.setInt(1, idPersonneMorale);
+			ps = con.prepareStatement("SELECT * FROM familleac WHERE IDFAMILLE = ?");
+			ps.setInt(1, idFamily);
 
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Commercant(rs.getInt("IDCOMMERCANT"), rs.getString("ACTIVITE"), rs.getString("STAND"));
+				returnValue = new HostFamily(rs.getInt("IDFAMILLE"), rs.getInt("NOMBREDEPLACE") );
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -228,63 +224,4 @@ public class CommercantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	
-	
-	// main permettant de tester la classe (pour des test unitaires)
-			public static void main(String[] args) throws SQLException {
-				int returnValue;
-				CommercantDAO commercant = new CommercantDAO();
-				// test du constructeur
-				Commercant c1 = new Commercant(2367, "oui", "19/12/1999");
-				Commercant c2 = new Commercant(213, "oui", "11/12/2005");
-				Commercant c3 = new Commercant(671, "OUI", "12/05/1905");
-				//test de la methode add
-				returnValue = commercant.add(c1);
-				System.out.println(returnValue + " commercant ajouté");
-				returnValue = commercant.add(c2);
-				System.out.println(returnValue + " commercant ajouté");
-				returnValue = commercant.add(c3);
-				System.out.println(returnValue + " commercant ajouté");
-				System.out.println();
-				
-				// appelà nouveau du constructeur
-				Commercant c4 = new Commercant(2367, "WAB", "11/12/2999");
-				Commercant c5 = new Commercant(213, "WAC", "09/06/1005");
-				Commercant c6 = new Commercant(671, "WAD", "06/02/3905");
-				// test de la methode update
-				returnValue = commercant.update(c4);
-				System.out.println(returnValue + " commercant MAJ");
-				returnValue = commercant.update(c5);
-				System.out.println(returnValue + " commercant MAJ");
-				returnValue = commercant.update(c6);
-				System.out.println(returnValue + " commercant MAJ");
-				System.out.println();
-				// test de la methode delete
-				returnValue = 0;
-				
-				returnValue = commercant.delete(c2);
-				System.out.println(returnValue + " commercant supprimé");
-
-				System.out.println();
-				
-				
-				// test de la methode get
-				Commercant c = commercant.get(2367); 
-				// appel implicite de la methode toString de la classe Object (à eviter)
-				System.out.println(c);
-				System.out.println();
-
-
-				
-				
-			}
-		
-		
-		
-		
-		
-
-	
-
 }
-

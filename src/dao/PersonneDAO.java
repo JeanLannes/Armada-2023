@@ -49,7 +49,7 @@ public class PersonneDAO extends ConnectionDAO {
 				ps.setInt(1, personne.getId());
 				ps.setString(2, personne.getFirstName());
 				ps.setString(3, personne.getLastName());
-				ps.setInt(4, personne.getFunction());
+				ps.setString(4, personne.getFunction());
 				ps.setString(5, personne.getBirthday());
 				// Execution de la requete
 				returnValue = ps.executeUpdate();
@@ -99,7 +99,7 @@ public class PersonneDAO extends ConnectionDAO {
 			// Execution de la requete
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				returnValue = new Personne(rs.getInt("ID"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getInt("FUNCTION"), rs.getString("BIRTHDATE"));
+				returnValue = new Personne(rs.getInt("ID"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("FUNCTION"), rs.getString("BIRTHDATE"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -140,7 +140,7 @@ public class PersonneDAO extends ConnectionDAO {
 			ps.setString(1, per.getBirthday());
 			ps.setString(2, per.getFirstName());
 			ps.setString(3, per.getLastName());
-			ps.setInt(4, per.getFunction());
+			ps.setString(4, per.getFunction());
 			ps.setInt(5, per.getId());
 			// Execution de la requete
 			ps.executeUpdate();

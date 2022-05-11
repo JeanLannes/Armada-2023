@@ -2,7 +2,6 @@ package GUI;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import model.FamilleAcceuil;
 
 public class Main {
 
@@ -15,9 +14,9 @@ public class Main {
 	static AddParticipant add = new AddParticipant();
 	static DescriptionSheet ds = new DescriptionSheet();
 	static Delegation deleg = new Delegation();
-	static Entreprise ent = new Entreprise();
-	static Commercant com = new Commercant();
-	static Bateau bat = new Bateau();
+	static EntrepriseGUI ent = new EntrepriseGUI();
+	static RetailerGUI com = new RetailerGUI();
+	static BoatGUI bat = new BoatGUI();
 	static Famille fa = new Famille();
 	static PersonneMorale pm = new PersonneMorale();
 	static String mailAccount;
@@ -225,6 +224,12 @@ public class Main {
 		mp.setVisible(true);
 	}
 	
+	public static void comToMenu() {
+		com.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
 	public static String getMail() {
 		return mailAccount;
 	}
@@ -232,4 +237,6 @@ public class Main {
 	public static void setMail(String mail) {
 		mailAccount=mail;
 	}
+
+
 }

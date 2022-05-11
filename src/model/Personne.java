@@ -4,7 +4,7 @@ public class Personne {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private int function;
+	private String function;
 	private String birthday ;
 
 	public Personne()
@@ -12,7 +12,7 @@ public class Personne {
 		super();
 	}
 	
-	public Personne(int id, String firstName, String lastName, int function, String birthday)
+	public Personne(int id, String firstName, String lastName, String function, String birthday)
 	{
 		this.id=id;
 		this.firstName = firstName;
@@ -31,7 +31,7 @@ public class Personne {
 	public String getLastName() {
 		return lastName;
 	}
-	public int getFunction() {
+	public String getFunction() {
 		return function;
 	}
 	public String getBirthday() {
@@ -48,7 +48,7 @@ public class Personne {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public void setFunction(int function) {
+	public void setFunction(String function) {
 		this.function = function;
 	}
 	public void setBirthday(String birthday) {

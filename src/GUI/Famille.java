@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Compte;
+import model.Participant;
 import model.Personne;
 
 public class Famille extends JPanel {
@@ -96,6 +97,16 @@ public class Famille extends JPanel {
 	 */
 	protected void change() {
 		Main.faToMp();
+	}
+
+	public static void blockHostFamily() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void showUpdateProfile(Participant part) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

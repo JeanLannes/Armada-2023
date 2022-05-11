@@ -4,7 +4,9 @@ import java.awt.Font;
 import javax.swing.*;
 
 import dao.CompteDAO;
+import dao.ParticipantDAO;
 import model.Compte;
+import model.Participant;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,21 +24,24 @@ public class Menu extends JPanel {
 	static JButton modifyDescriptionSheet;
 	static JButton insertDescriptionSheet;
 	static JButton btnAddParticipant;
+	int completeCond=0;
 	
 	/**
 	 * Genere une page d'inscription
 	 */
 	public Menu() {
-		
-		JLabel lblEsigelec = new JLabel("ESIGELEC");	//AJOUT DU LOGO ARMADA2023
+		//AJOUT DU LOGO ARMADA2023
+		JLabel lblEsigelec = new JLabel("ESIGELEC");
 		lblEsigelec.setBounds(216, 100, 147, 67);
 		lblEsigelec.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
-		JLabel lblArmada = new JLabel("ARMADA 2023");	//AJOUT DU LOGO ESIGELEC
+		//AJOUT DU LOGO ESIGELEC
+		JLabel lblArmada = new JLabel("ARMADA 2023");
 		lblArmada.setBounds(673, 100, 207, 67);
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
-		btnAddParticipant = new JButton("AJOUTER UN PARTICIPANT");		//AJOUT DU BOUTON SE <<AJOUTER UN PARTICIPANT>>	
+		//AJOUT DU BOUTON SE <<AJOUTER UN PARTICIPANT>>	
+		btnAddParticipant = new JButton("AJOUTER UN PARTICIPANT");		
 		btnAddParticipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(4, 0);
@@ -45,7 +50,8 @@ public class Menu extends JPanel {
 		btnAddParticipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		btnAddParticipant.setBounds(532, 217, 348, 39);
 
-		btnModifyParcipant = new JButton("MODIFIER UN PARTICIPANT");		//AJOUT DU BOUTON SE <<MODIFIER UN PARTICIPANT>>
+		//AJOUT DU BOUTON <<MODIFIER UN PARTICIPANT>>
+		btnModifyParcipant = new JButton("MODIFIER UN PARTICIPANT");		
 		btnModifyParcipant.setBounds(532, 266, 348, 39);
 		btnModifyParcipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -54,7 +60,8 @@ public class Menu extends JPanel {
 		});
 		btnModifyParcipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnDeleteParticipant = new JButton("SUPPRIMER UN PARTICIPANT");		//AJOUT DU BOUTON SE <<SUPPRIMER UN PARTICIPANT>>
+		//AJOUT DU BOUTON <<SUPPRIMER UN PARTICIPANT>>
+		btnDeleteParticipant = new JButton("SUPPRIMER UN PARTICIPANT");		
 		btnDeleteParticipant.setBounds(532, 315, 348, 39);
 		btnDeleteParticipant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -63,7 +70,8 @@ public class Menu extends JPanel {
 		});
 		btnDeleteParticipant.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnSeeAProfil = new JButton("CONSULTER UN PROFIL");		//AJOUT DU BOUTON SE <<CONSULTER UN PROFIL>>
+		//AJOUT DU BOUTON <<CONSULTER UN PROFIL>>
+		btnSeeAProfil = new JButton("CONSULTER UN PROFIL");		
 		btnSeeAProfil.setBounds(530, 364, 350, 39);
 		btnSeeAProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,15 +80,18 @@ public class Menu extends JPanel {
 		});
 		btnSeeAProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");		//AJOUT DU BOUTON <<GERER LES INSCRIPTIONS>>
+		//AJOUT DU BOUTON <<GERER LES INSCRIPTIONS>>
+		btnInscriptionManagment = new JButton("GERER LES INSCRIPTIONS");		
 		btnInscriptionManagment.setBounds(530, 413, 350, 39);
 		btnInscriptionManagment.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	//AJOUT DU BOUTON <<ATTRIBUER UN EMPLACEMENT>>
+		//AJOUT DU BOUTON <<ATTRIBUER UN EMPLACEMENT>>
+		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	
 		btnAssignLocation.setBounds(530, 462, 350, 39);
 		btnAssignLocation.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnReturn = new JButton("RETOUR");		//AJOUT DU BOUTON DE <<RETOUR>> POUR RETOURNER A L'ECRAN DE CONNECTION
+		//AJOUT DU BOUTON DE <<RETOUR>> POUR RETOURNER A L'ECRAN DE CONNECTION
+		btnReturn = new JButton("RETOUR");		
 		btnReturn.setBounds(430, 530, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,19 +100,22 @@ public class Menu extends JPanel {
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
-		btnSeeProfil = new JButton("CONSULTER SON PROFIL");		//AJOUT DU BOUTON <<CONSULTER SON PROFIL>>
+		//AJOUT DU BOUTON <<CONSULTER SON PROFIL>>
+		btnSeeProfil = new JButton("CONSULTER SON PROFIL");		
 		btnSeeProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(3, 4);
 				Compte cpt = new Compte();
 				cpt = CompteDAO.getWithMail(Main.getMail());	
+				//METS A JOUR LES INFOS POUR ETRE EN RACCORD AVEC LE COMPTE CONNECTE 
 				EditParticipant.showUpdateProfile(cpt.getId());
 			}
 		});
 		btnSeeProfil.setBounds(200, 217, 314, 39);
 		btnSeeProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		btnCompleteProfil = new JButton("COMPLETER UN PROFIL");		//AJOUT DU BOUTON <<COMPLETER UN PROFIL>>
+		//AJOUT DU BOUTON <<COMPLETER UN PROFIL>>
+		btnCompleteProfil = new JButton("COMPLETER UN PROFIL");		
 		btnCompleteProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(3, 0);
@@ -113,7 +127,8 @@ public class Menu extends JPanel {
 		btnCompleteProfil.setBounds(200, 266, 314, 39);
 		btnCompleteProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON <<INSERER UNE FICHE DESCRIPTIVE>>
+		//AJOUT DU BOUTON <<INSERER UNE FICHE DESCRIPTIVE>>
+		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		
 		modifyDescriptionSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(5, 0);
@@ -130,7 +145,10 @@ public class Menu extends JPanel {
 		});
 		insertDescriptionSheet.setBounds(200, 364, 314, 39);
 		insertDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
-
+		
+		//EMPECHE L'ACCES AU MENU CONSULTER LE PROFIL
+		btnSeeProfil.setEnabled(false);
+		
 		//AJOUT DES ELEMENTS GRAPHIQUES
 		setLayout(null);
 		add(lblEsigelec);
@@ -149,6 +167,25 @@ public class Menu extends JPanel {
 	}
 
 	/**
+	 * Permet de bloquer l'accès à des boutons en fonctions des différentes infos obtenues
+	 */
+	protected static void block() {
+		Participant part = new Participant(); 
+		Compte cpt = new Compte(); 
+		cpt = CompteDAO.getWithMail(Main.getMail());
+		part=ParticipantDAO.get(cpt.getId());
+		System.out.println(part.getIdRetailer());
+		//VERIFIE SI LE PARTICIPANT EST AU MOINS ASSOCIE A UN TYPE
+		if (part.getBoatName()!=null || part.getIdRetailer()!=0 || part.getIdPersonneMorale()!=0  || part.getCountry() != null  || part.getImEntreprise() != null  || part.getIdFamille()!=0  || part.getIdPlaisancier()!=0) {
+			btnSeeProfil.setEnabled(true);
+			btnCompleteProfil.setEnabled(false);
+		} else {
+			btnSeeProfil.setEnabled(false);
+			btnCompleteProfil.setEnabled(true);
+		}
+	}
+	
+	/**
 	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
 	 * @param i
 	 * @param j
@@ -163,9 +200,10 @@ public class Menu extends JPanel {
 		}		
 		if (i==3) {
 			Main.menuToMp();
+			//REND LES CASES NON MODIFIABLES
 			EditParticipant.changeIndex(j);
 		}
-		if (i==4)
+		if (i==4)	//AJOUT D'UN COMPTE
 			Main.menuToAdd();
 		if (i==5)
 			Main.menuToDs();

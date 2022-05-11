@@ -24,32 +24,55 @@ public class DescriptionSheet extends JPanel {
 	private JButton btnReturn;
 	private JTextField tfDescription;
 	private static JLabel lblDescription;
-	private JLabel lblType;
 	private JTextField tfName;
 	private JLabel lblName;
 	
 	public DescriptionSheet() {
 		setLayout(null);
 		
-		JLabel lblArmada = new JLabel("ARMADA 2023");	//AJOUT DU LOGO ARMADA2023
+		//AJOUT DU LOGO ARMADA2023
+		JLabel lblArmada = new JLabel("ARMADA 2023");
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		lblArmada.setBounds(657, 100, 209, 67);
 		
-		JLabel lblEsigelec = new JLabel("ESIGELEC");	//AJOUT DU LOGO ESIGELEC
+		//AJOUT DU LOGO ESIGELEC
+		JLabel lblEsigelec = new JLabel("ESIGELEC");	
 		lblEsigelec.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		lblEsigelec.setBounds(200, 100, 147, 67);
 		
+		//CHAMP DE TEXTE NOM
+		tfName = new JTextField();
+		tfName.setColumns(10);
+		tfName.setBounds(250, 266, 579, 41);
+		
+		//TEXTE NOM
+		lblName = new JLabel("NOM ");
+		lblName.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		lblName.setBounds(167, 273, 68, 34);
+		
+		//TEXTE DESCRIPTION
+		lblDescription = new JLabel("DESCRIPTIF");
+		lblDescription.setBounds(88, 329, 147, 34);
+		lblDescription.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		
+		//CHAMP DE TEXTE DESCRIPTION
+		tfDescription = new JTextField();
+		tfDescription.setBounds(250, 329, 579, 174);
+		add(tfDescription);
+		
+		//BONTON <<VALIDER>> 
 		btnConfirm = new JButton("VALIDER");
 		btnConfirm.setBounds(250, 544, 200, 51);
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Description des = new Description(DescriptionDAO.getMaxID()+1, tfName.getText(), tfDescription.getText(), 1);
+				Description des = new Description(DescriptionDAO.getMaxID()+1, tfName.getText(), tfDescription.getText());
 				DescriptionDAO.add(des);
 				change();
 			}
 		});
 		
+		//BONTON <<RETOUR>> 
 		btnReturn = new JButton("RETOUR");
 		btnReturn.setBounds(631, 544, 200, 51);
 		btnReturn.addActionListener(new ActionListener() {
@@ -58,33 +81,6 @@ public class DescriptionSheet extends JPanel {
 			}
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
-		
-		lblDescription = new JLabel("DESCRIPTIF");
-		lblDescription.setBounds(88, 393, 147, 34);
-		lblDescription.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		
-		tfDescription = new JTextField();
-		tfDescription.setBounds(250, 393, 579, 110);
-		add(tfDescription);
-		tfDescription.setColumns(10);
-		
-		lblType = new JLabel("TYPE");
-		lblType.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblType.setBounds(166, 331, 74, 34);
-		
-		JComboBox type = new JComboBox();
-		type.setBounds(250, 331, 581, 34);
-
-		tfName = new JTextField();
-		tfName.setColumns(10);
-		tfName.setBounds(250, 266, 579, 41);
-		
-		lblName = new JLabel("NOM ");
-		lblName.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		lblName.setBounds(167, 273, 68, 34);
-		
-		add(lblType);
-		add(type);		
 		add(tfName);
 		add(lblName);
 		add(btnConfirm);

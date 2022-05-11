@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import dao.CompteDAO;
 import dao.PersonneDAO;
 import model.Compte;
+import model.Participant;
 import model.Personne;
 import javax.swing.JComboBox;
 
@@ -87,5 +88,15 @@ public class Delegation extends JPanel {
 	 */
 	protected void change() {
 		Main.delegToMp();
+	}
+
+	public static void showUpdateProfile(Participant part) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void blockDelegation() {
+		// TODO Auto-generated method stub
+		
 	}
 }

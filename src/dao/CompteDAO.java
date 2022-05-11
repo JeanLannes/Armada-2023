@@ -121,6 +121,46 @@ public class CompteDAO extends ConnectionDAO {
 		return id;
 	}
 
+	public static int getSize() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int number=0;
+
+		// Connexion a la BDD
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Selectionne le nombre total de tous les comptes dans la BDD
+			ps = con.prepareStatement("SELECT COUNT(IDCOMPTE) FROM COMPTE");
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			rs.next();
+			number=rs.getInt("COUNT(IDCOMPTE)");
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return number;
+	}
+
 	/**
 	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP
 	 * @param mail MAIL DU COMPTE 
@@ -175,7 +215,7 @@ public class CompteDAO extends ConnectionDAO {
 			return returnValue;
 	}
 
-		/**
+	/**
 	 * Permet de retrouver un compte dans la BDD via le MAIL et le MDP
 	 * @param mail MAIL DU COMPTE 
 	 * @param password MOT DE PASSE DU COMPTE 

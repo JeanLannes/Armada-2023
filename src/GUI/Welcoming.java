@@ -55,9 +55,13 @@ public class Welcoming extends JPanel {
 		            org=OrganisateurDAO.SignIn(userText, pwdText);	
 	            	Main.setMail(userText);
 		            if (cpt != null) {
-		            	change(1);	//AFFICHE LE MENU
-		            	Menu.participant(); 	//RESTREINT LE MENU A CELUI D'UN COMPTE PARTICIPANT
+		            	//AFFICHE LE MENU
+		            	change(1);	
+		            	//RESTREINT LE MENU A CELUI D'UN COMPTE PARTICIPANT
+		            	Menu.participant(); 	
 			            test++;
+			            //RESTREINT LE MENU SI LE PARTICIPANT N'EST PAS LIE A UN TYPE
+			            Menu.block();	
 		            } else if (org != null) {
 		            	change(1);	//AFFICHE LE MENU
 		            	Menu.admin(); 	//RESTREINT LE MENU A CELUI D'UN COMPTE ORGANISATEUR

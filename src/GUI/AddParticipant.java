@@ -12,8 +12,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import dao.CompteDAO;
+import dao.ParticipantDAO;
 import dao.PersonneDAO;
 import model.Compte;
+import model.Participant;
 import model.Personne;
 
 @SuppressWarnings("serial")
@@ -27,46 +29,57 @@ public class AddParticipant extends JPanel {
 	public AddParticipant() {
 		this.setLayout(null);
 		
-		JLabel lblArmada = new JLabel("ARMADA 2023");	//AJOUT DU LOGO ARMADA2023
+		//AJOUT DU LOGO ARMADA2023
+		JLabel lblArmada = new JLabel("ARMADA 2023");	
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		lblArmada.setBounds(657, 100, 209, 67);
 		
-		JLabel lblEsigelec = new JLabel("ESIGELEC");	//AJOUT DU LOGO ESIGELEC
+		//AJOUT DU LOGO ESIGELEC
+		JLabel lblEsigelec = new JLabel("ESIGELEC");	
 		lblEsigelec.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		lblEsigelec.setBounds(200, 100, 147, 67);
 		
-		JLabel lblId = new JLabel("MAIL :");	//AJOUT DU TEXTE MAIL
+		//AJOUT DU TEXTE MAIL
+		JLabel lblId = new JLabel("MAIL :");
 		lblId.setBounds(200, 239, 100, 67);
 		lblId.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		
-		JLabel lblPassword = new JLabel("MDP :");	//AJOUT DU TEXTE MDP
+		//AJOUT DU TEXTE MDP
+		JLabel lblPassword = new JLabel("MDP :");	
 		lblPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		lblPassword.setBounds(206, 326, 96, 67);
 		
-		JButton btnAdd = new JButton("CREER");		//AJOUT DU BOUTON <<CREER>>
+		//AJOUT DU BOUTON <<CREER>>
+		JButton btnAdd = new JButton("CREER");		
 		btnAdd.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 	            userText = tfId.getText();
 	            pwdText = tfPassword.getText();
+	            
 	            Compte cpt=null;
 	            Personne per=null;
+	            Participant part=null;
+	            
 	            if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
-	            	cpt = new Compte(CompteDAO.getMaxID()+1,pwdText,userText);
-	            	per = new Personne(0,"0","0",0,"1/1/01");
-	            	per.setId(CompteDAO.getMaxID()+1);
+	            	cpt = new Compte(CompteDAO.getMaxID()+1,pwdText,userText);	            	
+	            	per = new Personne(0,"0","0","0","1/1/01");
+	            	per.setId(cpt.getId());
+	            	part = new Participant(cpt.getId());
+	            	part.setProfil("0");
 		            if (CompteDAO.add(cpt)!=2) {	// AJOUTE LE COMPTE DANS LA BDD
 		            	PersonneDAO.add(per);
+		            	ParticipantDAO.add(part);
 		            	change();
 		            }
 	            }
 			}
 		});
-		
 		btnAdd.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnAdd.setBounds(200, 505, 286, 50);
 		
-		JButton btnReturn = new JButton("RETOUR");	//AJOUT DU BOUTON SE <<RETOUR>>
+		//AJOUT DU BOUTON SE <<RETOUR>>
+		JButton btnReturn = new JButton("RETOUR");	
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change();
@@ -75,11 +88,13 @@ public class AddParticipant extends JPanel {
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnReturn.setBounds(580, 505, 286, 51);
 		
-		tfPassword = new JPasswordField();	//AJOUT DE LA ZONE DE TEXTE RELATIVE AU MAIL
+		//AJOUT DE LA ZONE DE TEXTE RELATIVE AU MAIL
+		tfPassword = new JPasswordField();
 		tfPassword.setBounds(306, 326, 560, 50);
 		tfPassword.setColumns(10);
 		
-		tfId = new JTextField();	//AJOUT DE LA ZONE DE TEXTE RELATIVE AU MDP
+		//AJOUT DE LA ZONE DE TEXTE RELATIVE AU MDP
+		tfId = new JTextField();
 		tfId.setBounds(306, 239, 560, 50);
 		tfId.setColumns(10);
 
