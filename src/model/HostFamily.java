@@ -8,27 +8,27 @@ public class HostFamily {
 	
 	private int idFamily;
 	private int nbPlace;
-	private Address address ;
+	private String address ;
 	
 	public HostFamily()
 	{
 		super();
 	}
-	public HostFamily(int idFamily, int nbPlace )
+	public HostFamily(int idFamily, String address, int nbPlace)
 	{
 		this.idFamily = idFamily;
 		this.nbPlace = nbPlace;
-		this.setAddress(new Address());
+		this.address = address;
 	}
 
 	//GETTER
-	public int getIdFamille() {
+	public int getIdFamily() {
 		return idFamily;
 	}
 	public int getNbPlace() {
 		return nbPlace;
 	}
-	public Address getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
@@ -39,11 +39,7 @@ public class HostFamily {
 	public void setNbPlace(int nbPlace) {
 		this.nbPlace = nbPlace;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
-	}
-	public static void showUpdateProfile(Participant part) {
-		// TODO Auto-generated method stub
-		
 	}
 }

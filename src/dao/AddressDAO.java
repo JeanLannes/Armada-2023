@@ -26,7 +26,7 @@ public class AddressDAO extends ConnectionDAO {
 	 * @param address l'address a ajouter
 	 * @return int retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(Address address) {
+	public static int add(Address address) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -67,6 +67,50 @@ public class AddressDAO extends ConnectionDAO {
 			}
 		}
 		return returnValue;
+	}
+	
+	/**
+	 * Cette methode sert a obtenir l'id max dans la BDD. Cela permet de donner un nouvel id non-utilise.
+	 * @return int
+	 */
+	public static int getMaxID() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int id=0;
+
+		// Connexion a la BDD
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Selectionne l'ID Max des inscriptions
+			ps = con.prepareStatement("SELECT MAX(IDADRESSE) FROM ADRESSE");
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			rs.next();
+			id=rs.getInt("MAX(IDADRESSE)");
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return id;
 	}
 
 	/**

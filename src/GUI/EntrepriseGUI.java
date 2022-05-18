@@ -7,10 +7,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Boat;
 import model.Compte;
+import model.Entreprise;
+import model.Entreprise;
 import model.Participant;
 import model.Personne;
 import javax.swing.JTextField;
+
+import dao.BoatDAO;
+import dao.CompteDAO;
+import dao.EntrepriseDAO;
+import dao.EntrepriseDAO;
+import dao.ParticipantDAO;
 
 public class EntrepriseGUI extends JPanel {
 	private static JTextField tfName;
@@ -39,22 +49,39 @@ public class EntrepriseGUI extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-	            Compte cpt=null;
-	            Personne per=null;
-	            if (verifytf()) {	
-
-	            	//CREATION D'UNE ENTREPRISE DANS LA BDD
-	            	Entreprise ent = new Entreprise(EntrepriseDAO.getMaxID()+1, tfName.getText().toString(), tfImmatriculation.getText().toString());
-	            	EntrepriseDAO.add(ent);
-	            	//LIAISON DE L'ENTREPRISE AU PARTICIPANT
-	            	Compte cpt= new Compte();
+				if (EditParticipant.getIndex()==4) {	// CONSULTATION
+					change();
+				} else if (EditParticipant.getIndex()==0 || EditParticipant.getIndex()==1) {	//MODIFICATION
+					if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
+			            //CREATION D'UN COMMERCANT DANS LA BDD
+		            	Entreprise ent = new Entreprise(EntrepriseDAO.getMaxID()+1, tfName.getText(),tfImmatriculation.getText());
+		            	EntrepriseDAO.add(ent);
+		            	//LIAISON DU COMMERCANT AU PARTICIPANT
+		            	Compte cpt= new Compte();
+			            cpt=CompteDAO.getWithMail(Main.getMail());
+			            System.out.println();
+			            ParticipantDAO.setConnexion(cpt.getId(), 3, ent.getId());	
+		            	EditParticipant.closeEditParticipant();
+		            	
+		            	Participant par = new Participant();
+		            	par=ParticipantDAO.get(cpt.getId());
+						System.out.println(par.getIdBoat() + "B /" + par.getIdDelegation() + "D /" + par.getIdEntreprise() + "E /");
+		            	
+		            	Menu.block();
+		            }
+				} else if (EditParticipant.getIndex()==2) {					
+				if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
+					//LIAISON DU COMMERCANT AU PARTICIPANT
+					Compte cpt= new Compte();
 		            cpt=CompteDAO.getWithMail(Main.getMail());
-		            ParticipantDAO.setConnexion(cpt.getId(), 2, ent.getIdEntreprise());	
+		            Participant part = new Participant();
+		            part = ParticipantDAO.get(cpt.getId());
+					//SUPPRESION D'UN COMMERCANT DANS LA BDD
+	            	EntrepriseDAO.delete(part.getIdBoat());
 	            	EditParticipant.closeEditParticipant();
-	            	
 	            	Menu.block();
-		   
-	            }
+				}  
+			}    
 			}
 		});
 		
@@ -122,10 +149,10 @@ public class EntrepriseGUI extends JPanel {
 	public static void showUpdateProfile(Participant part) {
 		//AJOUT DE L'OBJET ENTREPRISE 
 		Entreprise ent = new Entreprise();
-		ent=EntrepriseDAO.get(part.getImEntreprise());
+		ent=EntrepriseDAO.get(part.getIdEntreprise());
 		//IMPORTATION DES DONNEES 
 		tfName.setText(ent.getName());
-		tfImmatriculation.setText(ent.get());
+		tfImmatriculation.setText(ent.getImmatriculation());
 	}
 
 }

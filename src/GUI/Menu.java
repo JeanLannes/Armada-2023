@@ -21,8 +21,8 @@ public class Menu extends JPanel {
 	static JButton btnReturn;
 	static JButton btnSeeProfil;
 	static JButton btnCompleteProfil;
-	static JButton modifyDescriptionSheet;
-	static JButton insertDescriptionSheet;
+	static JButton InsertDescriptionSheet;
+	static JButton ModifyDescriptionSheet;
 	static JButton btnAddParticipant;
 	int completeCond=0;
 	
@@ -87,6 +87,11 @@ public class Menu extends JPanel {
 		
 		//AJOUT DU BOUTON <<ATTRIBUER UN EMPLACEMENT>>
 		btnAssignLocation  = new JButton("ATTRIBUER UN EMPLACEMENT");	
+		btnAssignLocation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				change(6, 4);
+			}
+		});
 		btnAssignLocation.setBounds(530, 462, 350, 39);
 		btnAssignLocation.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
@@ -128,23 +133,25 @@ public class Menu extends JPanel {
 		btnCompleteProfil.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
 		//AJOUT DU BOUTON <<INSERER UNE FICHE DESCRIPTIVE>>
-		modifyDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		
-		modifyDescriptionSheet.addActionListener(new ActionListener() {
+		InsertDescriptionSheet = new JButton("INSERER UNE FICHE DESCRIPTIVE");		
+		InsertDescriptionSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change(5, 0);
 			}
 		});
-		modifyDescriptionSheet.setBounds(200, 315, 314, 39);
-		modifyDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		InsertDescriptionSheet.setBounds(200, 315, 314, 39);
+		InsertDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
-		insertDescriptionSheet = new JButton("MODIFIER UNE FICHE DESCRIPTIVE");		//AJOUT DU BOUTON <<MODIFIER UNE FICHE DESCRIPTIVE>>
-		insertDescriptionSheet.addActionListener(new ActionListener() {
+		//AJOUT DU BOUTON <<MODIFIER UNE FICHE DESCRIPTIVE>>
+		ModifyDescriptionSheet = new JButton("MODIFIER UNE FICHE DESCRIPTIVE");		
+		ModifyDescriptionSheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DescriptionSheet.showUpdateProfile();
 				change(5, 1);
 			}
 		});
-		insertDescriptionSheet.setBounds(200, 364, 314, 39);
-		insertDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		ModifyDescriptionSheet.setBounds(200, 364, 314, 39);
+		ModifyDescriptionSheet.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
 		
 		//EMPECHE L'ACCES AU MENU CONSULTER LE PROFIL
 		btnSeeProfil.setEnabled(false);
@@ -157,9 +164,9 @@ public class Menu extends JPanel {
 		add(btnModifyParcipant);
 		add(btnCompleteProfil);
 		add(btnDeleteParticipant);
-		add(modifyDescriptionSheet);
+		add(InsertDescriptionSheet);
 		add(btnSeeAProfil);
-		add(insertDescriptionSheet);
+		add(ModifyDescriptionSheet);
 		add(btnInscriptionManagment);
 		add(btnAssignLocation);
 		add(btnReturn);
@@ -174,14 +181,21 @@ public class Menu extends JPanel {
 		Compte cpt = new Compte(); 
 		cpt = CompteDAO.getWithMail(Main.getMail());
 		part=ParticipantDAO.get(cpt.getId());
-		System.out.println(part.getIdRetailer());
 		//VERIFIE SI LE PARTICIPANT EST AU MOINS ASSOCIE A UN TYPE
-		if (part.getBoatName()!=null || part.getIdRetailer()!=0 || part.getIdPersonneMorale()!=0  || part.getCountry() != null  || part.getImEntreprise() != null  || part.getIdFamille()!=0  || part.getIdPlaisancier()!=0) {
+		if (part.getIdBoat()!=0 || part.getIdRetailer()!=0 || part.getIdPersonneMorale()!=0  || part.getIdDelegation() != 0  || part.getIdEntreprise() != 0  || part.getIdFamille()!=0  || part.getIdPlaisancier()!=0) {
 			btnSeeProfil.setEnabled(true);
 			btnCompleteProfil.setEnabled(false);
 		} else {
 			btnSeeProfil.setEnabled(false);
 			btnCompleteProfil.setEnabled(true);
+		}
+		System.out.println(part.getIdFiche());
+		if (part.getIdFiche()==0) {
+			InsertDescriptionSheet.setEnabled(true);
+			ModifyDescriptionSheet.setEnabled(false);
+		} else {
+			InsertDescriptionSheet.setEnabled(false);
+			ModifyDescriptionSheet.setEnabled(true);
 		}
 	}
 	
@@ -207,14 +221,18 @@ public class Menu extends JPanel {
 			Main.menuToAdd();
 		if (i==5)
 			Main.menuToDs();
+		if (i==6) {
+			Main.menuToFp();
+			FindParticipant.changeIndex(j);
+		}
 	}
 	
 	/**
 	 * Supprime les boutons d'un compte non admin
 	 */
 	protected static void admin() {
-		modifyDescriptionSheet.setVisible(false);
-		insertDescriptionSheet.setVisible(false);
+		InsertDescriptionSheet.setVisible(false);
+		ModifyDescriptionSheet.setVisible(false);
 		btnSeeProfil.setVisible(false);
 		btnCompleteProfil.setVisible(false);
 		btnAddParticipant.setVisible(true);
@@ -229,8 +247,8 @@ public class Menu extends JPanel {
 	 * Supprime les boutons d'un compte non participant
 	 */
 	protected static void participant() {
-		modifyDescriptionSheet.setVisible(true);
-		insertDescriptionSheet.setVisible(true);
+		InsertDescriptionSheet.setVisible(true);
+		ModifyDescriptionSheet.setVisible(true);
 		btnSeeProfil.setVisible(true);
 		btnCompleteProfil.setVisible(true);
 		btnAddParticipant.setVisible(false);

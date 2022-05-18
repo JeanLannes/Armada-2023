@@ -118,4 +118,91 @@ public class BoatDAO extends ConnectionDAO {
 		return id;
 	}
 		
+	public static Boat get(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Boat returnValue = null;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM bateau WHERE IDBATEAU = ?");
+			ps.setInt(1, id);
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Boat(rs.getInt("IDBATEAU"), rs.getString("NOMBATEAU"), rs.getInt("TAILLEB"), rs.getString("PAVILLONB"), rs.getString("CAPITAINEB"), rs.getString("IMMATRICULATION"), rs.getString("TYPEBATEAU"), rs.getString("DATECREATION"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		if (returnValue==null)
+			return new Boat(0,"0",0, "0", null, null, null, null);
+		else 
+			return returnValue;
+	}
+
+	public static int delete(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int returnValue = 0;
+
+		// connexion a la base de donnees
+		try {
+
+			// tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("DELETE FROM BATEAU WHERE IDBATEAU = ?");
+			ps.setInt(1, id);
+
+			// Execution de la requete
+			returnValue = ps.executeUpdate();
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-02292"))
+				System.out.println("Suppression impossible !"
+						+ " le plaisancier est référee dans d'autre table.");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 }

@@ -84,9 +84,4 @@ public class Boat {
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-	public static void showUpdateProfile(Participant part) {
-		// TODO Auto-generated method stub
-		
-	}
 }

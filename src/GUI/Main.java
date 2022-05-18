@@ -4,21 +4,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 public class Main {
-
 	static JFrame f = new JFrame();
 	static Welcoming wel = new Welcoming();
 	static SignIn si = new SignIn();
 	static Menu menu = new Menu();
 	static FindParticipant fp = new FindParticipant();
 	static EditParticipant mp = new EditParticipant();
-	static AddParticipant add = new AddParticipant();
+	static AddParticipantGUI add = new AddParticipantGUI();
 	static DescriptionSheet ds = new DescriptionSheet();
-	static Delegation deleg = new Delegation();
+	static DelegationGUI deleg = new DelegationGUI();
 	static EntrepriseGUI ent = new EntrepriseGUI();
 	static RetailerGUI com = new RetailerGUI();
 	static BoatGUI bat = new BoatGUI();
-	static Famille fa = new Famille();
+	static HostFamilyGUI fa = new HostFamilyGUI();
 	static PersonneMorale pm = new PersonneMorale();
+	static EmplacementGUI emp = new EmplacementGUI();
 	static String mailAccount;
 	
 	public static void main(String[] args) {
@@ -140,30 +140,45 @@ public class Main {
 		add.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page DescriptionSheet par celui de la page menu
+	 */
 	public static void menuToDs() {
 		menu.setVisible(false);
 		f.setContentPane(ds);
 		ds.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page menu par celui de la page DescriptionSheet
+	 */
 	public static void dsToMenu() {
 		ds.setVisible(false);
 		f.setContentPane(menu);
 		menu.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page modifyParticipant par celui de la page Delegation
+	 */
 	public static void mpToDeleg() {
 		mp.setVisible(false);
 		f.setContentPane(deleg);
 		deleg.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page Delegation par celui de la page modifyParticipant
+	 */
 	public static void delegToMp() {
 		deleg.setVisible(false);
 		f.setContentPane(mp);
 		mp.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page modifyParticipant par celui de la page Entreprise
+	 */
 	public static void mpToEnt() {
 		mp.setVisible(false);
 		f.setContentPane(ent);
@@ -176,6 +191,9 @@ public class Main {
 		mp.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page modifyParticipant par celui de la page Retailer
+	 */
 	public static void mpToCom() {
 		mp.setVisible(false);
 		f.setContentPane(com);
@@ -212,6 +230,12 @@ public class Main {
 		mp.setVisible(true);
 	}
 	
+	public static void faToMenu() {
+		fa.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
 	public static void mpToPm() {
 		mp.setVisible(false);
 		f.setContentPane(pm);
@@ -226,6 +250,30 @@ public class Main {
 	
 	public static void comToMenu() {
 		com.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void delegToMenu() {
+		deleg.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void fpToEmp() {
+		fp.setVisible(false);
+		f.setContentPane(emp);
+		emp.setVisible(true);
+	}
+	
+	public static void empToMenu() {
+		emp.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void empToFp() {
+		emp.setVisible(false);
 		f.setContentPane(menu);
 		menu.setVisible(true);
 	}

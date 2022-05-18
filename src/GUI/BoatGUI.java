@@ -7,14 +7,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import dao.BoatDAO;
 import dao.CompteDAO;
 import dao.ParticipantDAO;
+import dao.RetailerDAO;
 import model.Boat;
 import model.Compte;
 import model.Participant;
 import model.Personne;
+import javax.swing.SwingConstants;
 
 public class BoatGUI extends JPanel {
 
@@ -54,17 +55,29 @@ public class BoatGUI extends JPanel {
 				} else if (EditParticipant.getIndex()==0 || EditParticipant.getIndex()==1) {	//MODIFICATION
 					if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
 			            //CREATION D'UN COMMERCANT DANS LA BDD
-		            	Boat boat = new Boat(BoatDAO.getMaxID()+1, tfName.getText(), tfLengh.getText(), tfFlag.getText(), tfCaptain.getText(), tfImmatriculation.getText(), tfType.getText(), tfDate.getText());
+		            	Boat boat = new Boat(BoatDAO.getMaxID()+1, tfName.getText(),Integer.parseInt(tfLengh.getText()), tfFlag.getText(), tfCaptain.getText(), tfImmatriculation.getText(), tfType.getText(), tfDate.getText());
 		            	BoatDAO.add(boat);
 		            	//LIAISON DU COMMERCANT AU PARTICIPANT
 		            	Compte cpt= new Compte();
 			            cpt=CompteDAO.getWithMail(Main.getMail());
-			            ParticipantDAO.setConnexion(cpt.getId(), 2, boat.getIdBateau());	
+			            ParticipantDAO.setConnexion(cpt.getId(), 1, boat.getIdBoat());	
 		            	EditParticipant.closeEditParticipant();
-		            	
 		            	Menu.block();
 		            }
+				} else if (EditParticipant.getIndex()==2) {					
+				if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
+					//LIAISON DU COMMERCANT AU PARTICIPANT
+	            	Compte cpt= new Compte();
+		            cpt=CompteDAO.getWithMail(Main.getMail());
+		            Participant part = new Participant();
+		            System.out.println(cpt.getId() + "151515");
+		            part = ParticipantDAO.get(cpt.getId());
+					//SUPPRESION D'UN COMMERCANT DANS LA BDD
+	            	BoatDAO.delete(part.getIdBoat());
+	            	EditParticipant.closeEditParticipant();
+	            	Menu.block();
 				}
+			}
 			}
 		});
 		btnAdd.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
@@ -145,6 +158,12 @@ public class BoatGUI extends JPanel {
 		tfImmatriculation.setColumns(10);
 		tfImmatriculation.setBounds(781, 327, 85, 50);
 
+		//AJOUT DU TEXTE CAPITAINE
+		JLabel lblCaptain = new JLabel("CAPITAINE :");
+		lblCaptain.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblCaptain.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
+		lblCaptain.setBounds(200, 388, 170, 67);
+		
 		// AJOUT DE TOUS LES ELEMENTS GRAPHIQUES AU PANEL 
 		add(lblArmada);
 		add(lblEsigelec);
@@ -164,6 +183,7 @@ public class BoatGUI extends JPanel {
 		add(lblDate);
 		add(lblImmatriculation);
 		add(tfImmatriculation);		
+		add(lblCaptain);
 	}
 
 	/**
@@ -191,6 +211,7 @@ public class BoatGUI extends JPanel {
 		tfLengh.setEditable(false);
 		tfDate.setEditable(false);
 		tfType.setEditable(false);
+		tfImmatriculation.setEditable(false);
 	}
 	
 	/**
@@ -203,6 +224,7 @@ public class BoatGUI extends JPanel {
 		tfLengh.setEditable(true);
 		tfDate.setEditable(true);
 		tfType.setEditable(true);
+		tfImmatriculation.setEditable(true);
 	}
 
 	/**
@@ -212,7 +234,7 @@ public class BoatGUI extends JPanel {
 	public static void showUpdateProfile(Participant part) {
 		//AJOUT DE L'OBJET BATEAU 
 		Boat boat = new Boat();
-		boat=BoatDAO.get(boat.getLengh(part.getIdBoat()));
+		boat=BoatDAO.get(part.getIdBoat());
 		//IMPORTATION DES DONNEES 
 		tfFlag.setText(boat.getFlag());
 		tfCaptain.setText(boat.getCaptain());
@@ -220,6 +242,6 @@ public class BoatGUI extends JPanel {
 		tfLengh.setText(Integer.toString(boat.getLengh()));
 		tfDate.setText(boat.getDate());
 		tfType.setText(boat.getType());
+		tfImmatriculation.setText(boat.getImmatriculation());
 	}
-
 }

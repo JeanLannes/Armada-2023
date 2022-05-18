@@ -3,29 +3,29 @@ package GUI;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dao.BoatDAO;
 import dao.CompteDAO;
 import dao.DescriptionDAO;
-import dao.PersonneDAO;
+import dao.ParticipantDAO;
+import model.Boat;
 import model.Compte;
 import model.Description;
-import model.Personne;
+import model.Participant;
+
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DropMode;
 
 @SuppressWarnings("serial")
 public class DescriptionSheet extends JPanel {
-	private JButton btnConfirm;
-	private JButton btnReturn;
-	private JTextField tfDescription;
+	private static JButton btnConfirm;
+	private static JButton btnReturn;
+	private static JTextField tfDescription;
 	private static JLabel lblDescription;
-	private JTextField tfName;
-	private JLabel lblName;
+	private static JTextField tfName;
+	private static JLabel lblName;
 	
 	public DescriptionSheet() {
 		setLayout(null);
@@ -58,7 +58,6 @@ public class DescriptionSheet extends JPanel {
 		//CHAMP DE TEXTE DESCRIPTION
 		tfDescription = new JTextField();
 		tfDescription.setBounds(250, 329, 579, 174);
-		add(tfDescription);
 		
 		//BONTON <<VALIDER>> 
 		btnConfirm = new JButton("VALIDER");
@@ -68,6 +67,10 @@ public class DescriptionSheet extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Description des = new Description(DescriptionDAO.getMaxID()+1, tfName.getText(), tfDescription.getText());
 				DescriptionDAO.add(des);
+				Compte cpt = new Compte();
+				cpt=CompteDAO.getWithMail(Main.getMail());
+				ParticipantDAO.setConnexion(cpt.getId(), 8, des.getIdSheet());
+				Menu.block();
 				change();
 			}
 		});
@@ -81,6 +84,8 @@ public class DescriptionSheet extends JPanel {
 			}
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
+		
+		//AJOUT DES ELEMENTS GRAPHIQUES
 		add(tfName);
 		add(lblName);
 		add(btnConfirm);
@@ -88,9 +93,46 @@ public class DescriptionSheet extends JPanel {
 		add(lblArmada);
 		add(lblEsigelec);
 		add(lblDescription);
+		add(tfDescription);
 	}
-
+	
+	/**
+	 * Permet de retourner sur le menu
+	 */
 	protected void change() {
 		Main.dsToMenu();
 	}
+	
+	/**
+	 * Permet de bloquer l'edition des champs de texte
+	 */
+	protected void blockDS() {
+		tfDescription.setEditable(false);
+		tfName.setEditable(false);
+	}
+
+	/**
+	 * Permet de débloquer l'edition des champs de texte
+	 */
+	protected void unblockDS() {
+		tfDescription.setEditable(true);
+		tfName.setEditable(true);
+	}
+
+	/**
+	 * Permet de mettre à jour la page Bateau avec les informations importés 
+	 * @param Participant
+	 */ 
+	public static void showUpdateProfile() {
+		Compte cpt =new Compte();
+		cpt=CompteDAO.getWithMail(Main.getMail());
+		Participant part = new Participant();
+		part = ParticipantDAO.get(cpt.getId());
+		Description ds = new Description();
+		ds=DescriptionDAO.get(part.getIdFiche());
+		//IMPORTATION DES DONNEES 
+		tfDescription.setText(ds.getDescription());
+		tfName.setText(ds.getName());
+	}
+
 }

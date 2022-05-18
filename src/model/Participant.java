@@ -3,11 +3,11 @@ package model;
 public class Participant {
 	private int idParticipant;
 	private String profil;
-	private String boatName;
+	private int idBoat;
 	private int idRetailer;
 	private int idPersonneMorale;
-	private String country;
-	private String imEntreprise;
+	private int idDelegation;
+	private int idEntreprise;
 	private int idFamille;
 	private int idPlaisancier;
 	private int idFiche;
@@ -30,8 +30,8 @@ public class Participant {
 	public String getProfil() {
 		return profil;
 	}
-	public String getBoatName() {
-		return boatName;
+	public int getIdBoat() {
+		return idBoat;
 	}
 	public int getIdRetailer() {
 		return idRetailer;
@@ -39,11 +39,11 @@ public class Participant {
 	public int getIdPersonneMorale() {
 		return idPersonneMorale;
 	}
-	public String getCountry() {
-		return country;
+	public int getIdDelegation() {
+		return idDelegation;
 	}
-	public String getImEntreprise() {
-		return imEntreprise;
+	public int getIdEntreprise() {
+		return idEntreprise;
 	}
 	public int getIdFamille() {
 		return idFamille;
@@ -66,20 +66,20 @@ public class Participant {
 	public void setProfil(String profil) {
 		this.profil = profil;
 	}
-	public void setBoatName(String boatName) {
-		this.boatName = boatName;
+	public void setIdBoat(int idBoat) {
+		this.idBoat = idBoat;
 	}
 	public void setIdRetailer(int idRetailer) {
 		this.idRetailer = idRetailer;
 	}
-	public void setCountry(String country) {
-		this.country=country;
+	public void setIdDelegation(int idDelegation) {
+		this.idDelegation=idDelegation;
 	}
 	public void setIdPersonneMorale(int idPersonneMorale) {
 		this.idPersonneMorale=idPersonneMorale;
 	}
-	public void setImEntreprise(String imEntreprise) {
-		this.imEntreprise=imEntreprise;
+	public void setIdEntreprise(int idEntreprise) {
+		this.idEntreprise=idEntreprise;
 	}
 	public void setIdFamille(int idFamille) {
 		this.idFamille=idFamille;
@@ -93,5 +93,4 @@ public class Participant {
 	public void setEmplacement(String emplacement) {
 		this.emplacement=emplacement;
 	}
-
 }

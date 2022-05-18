@@ -22,8 +22,11 @@ public class FindParticipant extends JPanel {
 	private static JLabel lblMessageMdf;
 	private static JLabel lblMessageDlt;
 	private static JLabel lblMessageCsl;
+	private static JLabel lblMessageEmp;
 	private JTable table;
 	private static String[][] data;
+	private static String mail=null;
+	private static int emplacement=0;
 
 	public FindParticipant() {
 		setLayout(null);
@@ -39,7 +42,7 @@ public class FindParticipant extends JPanel {
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 	
 		//MESSAGE DU MODE MODIFIER
-		lblMessageMdf = new JLabel("QUEL PARTICIPANT SOUHAITEZ-VOUS MODIFIER ?");
+		lblMessageMdf = new JLabel("A QUEL PARTICIPANT SOUHAITEZ-VOUS MODIFIER ?");
 		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessageMdf.setBounds(200, 211, 673, 38);
@@ -55,6 +58,12 @@ public class FindParticipant extends JPanel {
 		lblMessageCsl.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageCsl.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
 		lblMessageCsl.setBounds(200, 211, 673, 38);
+		
+		//MESSAGE DU MODE ATTRIBUER UN EMPLACEMENT
+        lblMessageEmp = new JLabel("EMPLACEMENT");
+        lblMessageEmp.setHorizontalAlignment(SwingConstants.CENTER);
+        lblMessageEmp.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+        lblMessageEmp.setBounds(200, 211, 673, 38);
 
 		//CREATION DU PANEL CONTENANT LA TABLE
         JPanel panel = new JPanel();
@@ -84,7 +93,10 @@ public class FindParticipant extends JPanel {
 		btnConfirm.setBounds(287, 530, 200, 51);
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				change(2);
+				if (emplacement==0)
+					change(2);
+				else 
+					change(3);
 			}
 		});
 		
@@ -107,7 +119,8 @@ public class FindParticipant extends JPanel {
 		add(lblMessageMdf);
 		add(lblMessageDlt);
 		add(lblMessageCsl);	
-        add(panel);
+		add(lblMessageEmp);
+        add(panel);        
 	}
 
 	/**
@@ -140,7 +153,15 @@ public class FindParticipant extends JPanel {
 			Main.fpToMp();
 			Compte cpt = new Compte();
 			cpt=CompteDAO.getWithMail(data[table.getSelectedRow()][0]);
+			setMail(data[table.getSelectedRow()][0]);
 			EditParticipant.showUpdateProfile(cpt.getId());
+		}
+		if (i==3) {
+			Main.fpToEmp();
+			Compte cpt = new Compte();
+			cpt=CompteDAO.getWithMail(data[table.getSelectedRow()][0]);
+			setMail(data[table.getSelectedRow()][0]);
+			EmplacementGUI.showUpdateProfile(cpt.getId());
 		}
 	}
 	
@@ -153,16 +174,37 @@ public class FindParticipant extends JPanel {
 			lblMessageMdf.setVisible(true);
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(false);
+			lblMessageEmp.setVisible(false);
+			emplacement=0;
 		}
 		if (i==2) {
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(true);
 			lblMessageCsl.setVisible(false);
+			lblMessageEmp.setVisible(false);
+			emplacement=0;
 		}
 		if (i==3) {
 			lblMessageMdf.setVisible(false);
 			lblMessageDlt.setVisible(false);
 			lblMessageCsl.setVisible(true);
+			lblMessageEmp.setVisible(false);
+			emplacement=0;
 		}
+		if (i==4) {
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(false);
+			lblMessageEmp.setVisible(true);
+			emplacement=1;
+		}
+	}
+	
+	protected static String getMail() {
+		return mail;
+	}
+	
+	protected static void setMail(String mailbis) {
+		mail=mailbis;
 	}
 }

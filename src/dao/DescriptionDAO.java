@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import GUI.DescriptionSheet;
 import GUI.EditParticipant;
 import GUI.Main;
 import model.*;
@@ -118,26 +119,25 @@ public class DescriptionDAO extends ConnectionDAO {
 		}
 		return id;
 	}
-	/*
-	public Inscription get(int id) {
+	
+	public static Description get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Inscription returnValue = null;
+		Description returnValue = null;
 
 		// connexion a la base de donnees
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM inscription WHERE IDINSCRIPTION = ?");
+			ps = con.prepareStatement("SELECT * FROM fichedescriptive WHERE IDFICHE = ?");
 			ps.setInt(1, id);
-
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Inscription(rs.getInt("IDINSCRIPTION"), null, null, null, null);
+				returnValue = new Description(rs.getInt("IDFICHE"), rs.getString("NOMFICHE"), rs.getString("DESCRIPTIONFICHE"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -164,5 +164,5 @@ public class DescriptionDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	*/
+
 }

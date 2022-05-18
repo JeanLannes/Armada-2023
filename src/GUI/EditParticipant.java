@@ -38,7 +38,8 @@ public class EditParticipant extends JPanel {
 	private static JComboBox cbType;
 
 	public EditParticipant() {
-
+		setLayout(null);
+		
 		//AJOUT DU TEXTE NOM
 		JLabel lblLastName = new JLabel("NOM ");
 		lblLastName.setBounds(200, 206, 74, 34);
@@ -55,7 +56,7 @@ public class EditParticipant extends JPanel {
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
 		//AJOUT DE LA BOITE A SELECTION DES DIFFERENTS PARTICIPANTS
-		String[] tab = { "Bateau", "Commerçant", "Délégation", "Entreprise", "Famille d'accueil"};
+		String[] tab = {"Bateau", "Commerçant", "Délégation", "Entreprise", "Famille d'accueil"};
 		cbType = new JComboBox(tab);
 		cbType.setBounds(391, 359, 141, 38);
 		cbType.setSelectedIndex(4);
@@ -72,16 +73,18 @@ public class EditParticipant extends JPanel {
 		btnConfirm.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cbType.getSelectedItem().toString().equals("Bateau")) {
-					Main.mpToBat();
-				} else if (cbType.getSelectedItem().toString().equals("Commerçant")) {
-					Main.mpToCom();
-				} else if (cbType.getSelectedItem().toString().equals("Entreprise")) {
-					Main.mpToEnt();
-				} else if (cbType.getSelectedItem().toString().equals("Délégation")) {
-					Main.mpToDeleg();
-				} else if (cbType.getSelectedItem().toString().equals("Famille d'accueil")) {
-					Main.mpToFa();
+				if (verify()) {	
+					if (cbType.getSelectedItem().toString().equals("Bateau")) {
+						Main.mpToBat();
+					} else if (cbType.getSelectedItem().toString().equals("Commerçant")) {
+						Main.mpToCom();
+					} else if (cbType.getSelectedItem().toString().equals("Entreprise")) {
+						Main.mpToEnt();
+					} else if (cbType.getSelectedItem().toString().equals("Délégation")) {
+						Main.mpToDeleg();
+					} else if (cbType.getSelectedItem().toString().equals("Famille d'accueil")) {
+						Main.mpToFa();
+					}
 				}
 			}
 		});
@@ -169,7 +172,6 @@ public class EditParticipant extends JPanel {
 		JLabel lblBirthday = new JLabel("NAISSANCE");
 		lblBirthday.setBounds(542, 363, 147, 34);
 		lblBirthday.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-		setLayout(null);
 		
 		//AJOUT DE LA ZONE DE TEXTE NAISSANCE
 		tfbirthday = new JTextField();
@@ -200,6 +202,54 @@ public class EditParticipant extends JPanel {
 		add(btnReturn);
 	}
 	
+	protected static String dateConversion(String bd) {
+		String year, month, day;
+        //AAAA
+		year=bd.substring(0, 4);
+        //MM
+		month=bd.substring(5, 7);
+        //JJ
+		day=bd.substring(8, 10);
+		//CONCAT
+		bd = day + '/' + month + '/' + year;
+		return bd;
+	}
+
+	protected boolean verify() {
+        String birthday = tfbirthday.getText();
+        String ln = tfLastName.getText();
+        String fn = tfFirstName.getText();
+        String mail = tfMail.getText();
+        String id = tfId.getText();
+        String password = tfPassword.getText();
+		System.out.println(birthday);
+        int cond=0;
+        String test;
+		if (!birthday.isEmpty() && !ln.isEmpty() && !fn.isEmpty() && !mail.isEmpty() && !id.isEmpty() && !password.isEmpty()) {	
+			//Test : JJ
+			test=birthday.substring(0, 2);
+			if(Integer.valueOf(test)>31)
+				cond++;
+			//Test : MM
+			test=birthday.substring(3, 5);
+			if(Integer.valueOf(test)>12)
+				cond++;
+			//Test : AAAA
+			test=birthday.substring(6, 10);
+			if(1900>Integer.valueOf(test) || Integer.valueOf(test)>2022)
+				cond++;
+			//RETURN
+			if (cond==0)
+				return true;
+			else {
+				JOptionPane.showMessageDialog(this, "La date doit correspondre au format suivant : JJ/MM/AAAA");
+				return false;
+			}
+		}
+        JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+        return false;
+	}
+
 	/**
 	 * Cette méthode sert à modifier/supprimer un compte/participant/personne
 	 */
@@ -215,6 +265,7 @@ public class EditParticipant extends JPanel {
 			//SUPPRIME UN PARTICIPANT/COMPTE DANS LA BDD
 			CompteDAO.delete(Integer.parseInt(tfId.getText()));	
 			PersonneDAO.delete(Integer.parseInt(tfId.getText()));
+			ParticipantDAO.delete(Integer.parseInt(tfId.getText()));
 		}
 		change(2);	//RETOURNE AU MENU
 	}
@@ -280,8 +331,8 @@ public class EditParticipant extends JPanel {
 			lblId.setVisible(true);
 			BoatGUI.unblockBoat();
 			RetailerGUI.unblockRetailer();
-			Famille.blockHostFamily();
-			Delegation.blockDelegation();
+			HostFamilyGUI.blockHostFamily();
+			DelegationGUI.blockDelegation();
 			EntrepriseGUI.blockEntreprise();
 		}
 		if (i==2) {	// SUPPRESION DE PROFIL
@@ -301,8 +352,8 @@ public class EditParticipant extends JPanel {
 			lblId.setVisible(true);
 			BoatGUI.blockBoat();
 			RetailerGUI.blockRetailer();
-			Famille.blockHostFamily();
-			Delegation.blockDelegation();
+			HostFamilyGUI.blockHostFamily();
+			DelegationGUI.blockDelegation();
 			EntrepriseGUI.blockEntreprise();
 		}
 		if (i==3) { // CONSULTATION DE PROFIL ADMIN
@@ -323,8 +374,8 @@ public class EditParticipant extends JPanel {
 			lblId.setVisible(true);
 			BoatGUI.blockBoat();
 			RetailerGUI.blockRetailer();
-			Famille.blockHostFamily();
-			Delegation.blockDelegation();
+			HostFamilyGUI.blockHostFamily();
+			DelegationGUI.blockDelegation();
 			EntrepriseGUI.blockEntreprise();
 		}
 		if (i==4) {	// CONSULTATION DE PROFIL PARTICIPANT
@@ -345,8 +396,8 @@ public class EditParticipant extends JPanel {
 			lblId.setVisible(false);
 			BoatGUI.blockBoat();
 			RetailerGUI.blockRetailer();
-			Famille.blockHostFamily();
-			Delegation.blockDelegation();
+			HostFamilyGUI.blockHostFamily();
+			DelegationGUI.blockDelegation();
 			EntrepriseGUI.blockEntreprise();
 		}
 	}
@@ -371,23 +422,28 @@ public class EditParticipant extends JPanel {
 		tfFirstName.setText(per.getFirstName());
 		tfLastName.setText(per.getLastName());
 		tfbirthday.setText(per.getBirthday());
-
+		
+		//CONVERSION DE LA DATE 
+		String bd=tfbirthday.getText();
+		bd=dateConversion(bd);
+		tfbirthday.setText(bd);
+		
 		if (part.getIdRetailer()!=0) {
 			//FORCE & MET A JOUR LA SELECTION DU COMMERCANT
 			cbType.setSelectedItem("Commerçant");
 			RetailerGUI.showUpdateProfile(part);
 		} 
-		if (part.getBoatName()!=null) {
+		if (part.getIdBoat()!=0) {
 			//FORCE & MET A JOUR LA SELECTION DU BATEAU
 			cbType.setSelectedItem("Bateau");
-			Boat.showUpdateProfile(part);
+			BoatGUI.showUpdateProfile(part);
 		} 
-		if (part.getCountry()!=null) {
+		if (part.getIdDelegation()!=0) {
 			//FORCE & MET A JOUR LA SELECTION DE LA DELEGATION
 			cbType.setSelectedItem("Délégation");
-			Delegation.showUpdateProfile(part);
+			DelegationGUI.showUpdateProfile(part);
 		} 
-		if (part.getImEntreprise()!=null) {
+		if (part.getIdEntreprise()!=0) {
 			//FORCE & MET A JOUR LA SELECTION DE L'ENTREPRISE
 			cbType.setSelectedItem("Entreprise");
 			EntrepriseGUI.showUpdateProfile(part);
@@ -395,7 +451,7 @@ public class EditParticipant extends JPanel {
 		if (part.getIdFamille()!=0) {
 			//FORCE & MET A JOUR LA SELECTION DE LA FAMILLE D'ACCUEIL
 			cbType.setSelectedItem("Famille d'accueil");
-			Famille.showUpdateProfile(part);
+			HostFamilyGUI.showUpdateProfile(part);
 		} 
 	}
 

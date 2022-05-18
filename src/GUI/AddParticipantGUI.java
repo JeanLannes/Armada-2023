@@ -19,14 +19,14 @@ import model.Participant;
 import model.Personne;
 
 @SuppressWarnings("serial")
-public class AddParticipant extends JPanel {
+public class AddParticipantGUI extends JPanel {
 
 	private JPasswordField tfPassword;
 	private JTextField tfId;
 	private String userText;
 	private String pwdText;
 
-	public AddParticipant() {
+	public AddParticipantGUI() {
 		this.setLayout(null);
 		
 		//AJOUT DU LOGO ARMADA2023

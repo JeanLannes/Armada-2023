@@ -5,17 +5,24 @@ package model;
  * @version 1.0
  */
 
-public class DelegationModel {
+public class Delegation {
 	private int id;
 	private String country;
 	private int number;
 	
-	public DelegationModel()
+	public Delegation()
 	{
 		super();
 	}
 	
-	public DelegationModel(int id, String country, int number)
+	public Delegation(int id, String country)
+	{
+		this.id=id;
+		this.country = country;
+
+	}
+
+	public Delegation(int id, String country, int number)
 	{
 		this.id=id;
 		this.country = country;

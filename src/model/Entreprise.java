@@ -6,41 +6,41 @@ package model;
  */
 
 public class Entreprise {
-	private int idSheet;
+	private int id;
 	private String name;
-	private int immatriculation;
+	private String immatriculation;
 	
 	public Entreprise()
 	{
 		super();
 	}
 	
-	public Entreprise(int id, String name, int immatriculation)
+	public Entreprise(int id, String name, String immatriculation)
 	{
-		this.idSheet=idSheet;
+		this.id=id;
 		this.name = name;
 		this.immatriculation=immatriculation;
 	}
 
 	//GETTERS
 	public int getId() {
-		return idSheet;
+		return id;
 	}
 	public String getName() {
 		return name;
 	}
-	public int getImmatriculation() {
+	public String getImmatriculation() {
 		return immatriculation;
 	}
 
 	//SETTERS
-	public void setId(int idSheet) {
-		this.idSheet=idSheet;
+	public void setId(int id) {
+		this.id=id;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setImmatriculation(int immatriculation) {
+	public void setImmatriculation(String immatriculation) {
 		this.immatriculation = immatriculation;
 	}
 }

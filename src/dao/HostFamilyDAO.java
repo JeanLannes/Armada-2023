@@ -29,7 +29,7 @@ public class HostFamilyDAO extends ConnectionDAO {
 	 * @param hostFamily la famille d'acceuil à ajouter 
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(HostFamily hostFamily) {
+	public static int add(HostFamily hostFamily, int idmax) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -42,10 +42,10 @@ public class HostFamilyDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO familleac (IDFAMILLE, NOMBREDEPLACE) VALUES (?, ?)");
-			ps.setInt(1, hostFamily.getIdFamille());
+			ps = con.prepareStatement("INSERT INTO familleac (IDFAMILLE, NOMBREDEPLACE, IDADRESSE) VALUES (?, ?, ?)");
+			ps.setInt(1, hostFamily.getIdFamily());
 			ps.setInt(2, hostFamily.getNbPlace());
-	
+			ps.setInt(3, idmax);
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
@@ -94,7 +94,7 @@ public class HostFamilyDAO extends ConnectionDAO {
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("UPDATE familleac set NOMBREDEPLACE = ? WHERE IDFAMILLE = ?");
 			ps.setInt(1, hostFamily.getNbPlace());
-			ps.setInt(2, hostFamily.getIdFamille());
+			ps.setInt(2, hostFamily.getIdFamily());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -128,6 +128,8 @@ public class HostFamilyDAO extends ConnectionDAO {
 	 * @param hostFamily le fournisseur a supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
+	
+	/*
 	public int delete(HostFamily hostFamily) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -170,7 +172,52 @@ public class HostFamilyDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	*/
+	
+	/**
+	 * Cette methode sert a obtenir l'id max dans la BDD. Cela permet de donner un nouvel id non-utilise.
+	 * @return int
+	 */
+	
+	public static int getMaxID() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int id=0;
 
+		// Connexion a la BDD
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Selectionne l'ID Max des inscriptions
+			ps = con.prepareStatement("SELECT MAX(IDFAMILLE) FROM FAMILLEAC");
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			rs.next();
+			id=rs.getInt("MAX(IDFAMILLE)");
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return id;
+	}
 
 	/**
 	 * Permet de recuperer une famille d'Acceuil à partir de son ID
@@ -189,7 +236,7 @@ public class HostFamilyDAO extends ConnectionDAO {
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM familleac WHERE IDFAMILLE = ?");
+			ps = con.prepareStatement("SELECT * FROM familleac INNER JOIN adresse ON familleac.idadresse = adresse.idadresse WHERE idFamille = ?");
 			ps.setInt(1, idFamily);
 
 			// on execute la requete
@@ -197,7 +244,7 @@ public class HostFamilyDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new HostFamily(rs.getInt("IDFAMILLE"), rs.getInt("NOMBREDEPLACE") );
+				returnValue = new HostFamily(rs.getInt("IDFAMILLE"), rs.getString("ADRESSE"), rs.getInt("NOMBREDEPLACE"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();

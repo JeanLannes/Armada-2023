@@ -234,6 +234,43 @@ public class PlaisancierDAO extends ConnectionDAO{
 		return returnValue;
 	}
 	
+		public static int getMaxID() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int id=0;
+		// Connexion a la BDD
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Selectionne l'ID Max des inscriptions
+			ps = con.prepareStatement("SELECT MAX(IDPLAISANCIER) FROM plaisancier");
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			rs.next();
+			id=rs.getInt("MAX(IDPLAISANCIER)");
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return id;
+	}
 	
 	/**
 	 * Permet d'éditer les informations d'un plaisancier dans la table plaisancier. Le mode est
@@ -255,7 +292,7 @@ public class PlaisancierDAO extends ConnectionDAO{
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO supplier (HORRAIREARR, HORRAIREDEP, EMPLACEMENTBASSIN) VALUES (?, ?, ?, ?)  WHERE IDPLAISANCIER = ?");
+			ps = con.prepareStatement("INSERT INTO plaisancier (HORRAIREARR, HORRAIREDEP, EMPLACEMENTBASSIN) VALUES (?, ?, ?, ?)  WHERE IDPLAISANCIER = ?");
 			ps.setString(1, plaisancier.getHorraireArr());
 			ps.setString(2, plaisancier.getHorraireDep());
 			ps.setString(3, plaisancier.getEmplacementBassin());
@@ -287,67 +324,4 @@ public class PlaisancierDAO extends ConnectionDAO{
 		}
 		return returnValue;
 	}
-	
-	// main permettant de tester la classe (pour des test unitaires)
-		public static void main(String[] args) throws SQLException {
-			int returnValue;
-			PlaisancierDAO plaisancier = new PlaisancierDAO();
-			// test du constructeur
-			Plaisancier p1 = new Plaisancier(112, "13H04", "18H58", "RiveDroite ");
-			Plaisancier p2 = new Plaisancier(221, "18H04", "22H58", "RiveDroite ");
-			Plaisancier p3 = new Plaisancier(3091, "23H04", "00H58", "RiveDroite ");
-			// test de la methode add
-			returnValue = plaisancier.add(p1);
-			System.out.println(returnValue + " Plaisancier ajouté");
-			returnValue = plaisancier.add(p2);
-			System.out.println(returnValue + " Plaisancier ajouté");
-			returnValue = plaisancier.add(p3);
-			System.out.println(returnValue + " Plaisancier ajouté");
-			System.out.println();
-
-			
-
-			// appelà nouveau du constructeur
-			Plaisancier p4 = new Plaisancier(112, "13H04", "18H58", "RiveDroite ");
-			Plaisancier p5 = new Plaisancier(221, "18H04", "22H58", "RiveDroite ");
-			Plaisancier p6 = new Plaisancier(3091, "23H04", "00H58", "RiveDroite ");
-			// test de la methode update
-			returnValue = plaisancier.update(p4);
-			System.out.println(returnValue + " plaisancier MAJ");
-			returnValue = plaisancier.update(p5);
-			System.out.println(returnValue + " Plaisancier MAJ");
-			returnValue = plaisancier.update(p6);
-			System.out.println(returnValue + " Plaisancier MAJ");
-			System.out.println();
-			
-			
-			// test de la methode delete
-			returnValue = 0;
-			
-			returnValue = plaisancier.delete(p2);
-			System.out.println(returnValue + " Plaisancier supprimée");
-
-			System.out.println();
-			
-			
-			// test de la methode get
-			Plaisancier p = plaisancier.get(3091); 
-			// appel implicite de la methode toString de la classe Object (à eviter)
-			System.out.println(p);
-			System.out.println();
-
-
-			
-
-			
-
-			
-			
-		}
-	
-	
-	
-	
-	
-
 }
