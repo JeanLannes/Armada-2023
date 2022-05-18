@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import dao.CompteDAO;
@@ -51,9 +52,8 @@ public class RetailerGUI extends JPanel {
 		            	Compte cpt= new Compte();
 			            cpt=CompteDAO.getWithMail(Main.getMail());
 			            ParticipantDAO.setConnexion(cpt.getId(), 2, ret.getIdRetailer());	
-			            
 		            	EditParticipant.closeEditParticipant();
-		            	
+		            	JOptionPane.showMessageDialog(btnAdd, "SUCCES : Le compte a été modifié.");
 		            	Menu.block();
 		            }
 				} else if (EditParticipant.getIndex()==2) {					
@@ -120,7 +120,13 @@ public class RetailerGUI extends JPanel {
 	 * @return boolean
 	 */
 	protected boolean verifytf() {
-        return true;
+		String activity = tfActivity.getText();
+        String stand = tfStand.getText();
+		if (!activity.isEmpty() && !stand.isEmpty()) {	
+				return true;
+		}
+        JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+        return false;
 	}
 	
 	/**

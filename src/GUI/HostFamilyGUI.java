@@ -57,7 +57,8 @@ public class HostFamilyGUI extends JPanel {
 		            	//LIAISON DU COMMERCANT AU PARTICIPANT
 		            	Compte cpt= new Compte();
 			            cpt=CompteDAO.getWithMail(Main.getMail());
-			            ParticipantDAO.setConnexion(cpt.getId(), 4, hf.getIdFamily());	
+			            ParticipantDAO.setConnexion(cpt.getId(), 4, hf.getIdFamily());
+			            JOptionPane.showMessageDialog(btnAdd, "SUCCES : Le compte a été modifié.");
 		            	EditParticipant.closeEditParticipant();
 		            	Menu.block();
 		            }

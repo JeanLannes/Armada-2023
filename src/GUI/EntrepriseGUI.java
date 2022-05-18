@@ -59,14 +59,10 @@ public class EntrepriseGUI extends JPanel {
 		            	//LIAISON DU COMMERCANT AU PARTICIPANT
 		            	Compte cpt= new Compte();
 			            cpt=CompteDAO.getWithMail(Main.getMail());
-			            System.out.println();
 			            ParticipantDAO.setConnexion(cpt.getId(), 3, ent.getId());	
 		            	EditParticipant.closeEditParticipant();
-		            	
 		            	Participant par = new Participant();
-		            	par=ParticipantDAO.get(cpt.getId());
-						System.out.println(par.getIdBoat() + "B /" + par.getIdDelegation() + "D /" + par.getIdEntreprise() + "E /");
-		            	
+		            	par=ParticipantDAO.get(cpt.getId());   	
 		            	Menu.block();
 		            }
 				} else if (EditParticipant.getIndex()==2) {					

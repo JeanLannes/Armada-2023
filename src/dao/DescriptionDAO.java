@@ -128,7 +128,6 @@ public class DescriptionDAO extends ConnectionDAO {
 
 		// connexion a la base de donnees
 		try {
-
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT * FROM fichedescriptive WHERE IDFICHE = ?");
 			ps.setInt(1, id);

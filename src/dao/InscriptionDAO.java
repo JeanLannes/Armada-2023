@@ -115,7 +115,7 @@ public class InscriptionDAO extends ConnectionDAO {
 		return id;
 	}
 
-	public Inscription get(int id) {
+	public static Inscription get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -133,7 +133,8 @@ public class InscriptionDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Inscription(rs.getInt("IDINSCRIPTION"), null, null, null, null);
+				returnValue = new Inscription(rs.getInt("IDINSCRIPTION"), rs.getString("NOMINSCRIPTION"), rs.getString("PRENOMINSCRIPTION"), rs.getString("ADRESSEMAIL"), rs.getString("ACTIVITEINSCRIPTION"));
+				return returnValue;
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -158,6 +159,47 @@ public class InscriptionDAO extends ConnectionDAO {
 			} catch (Exception ignore) {
 			}
 		}
-		return returnValue;
+		return new Inscription(0, "0", "0", "0", "0");
+	}
+
+
+	public static int getSize() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int id=0;
+
+		// Connexion a la BDD
+		try {
+			// Tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// Selectionne l'ID Max des inscriptions
+			ps = con.prepareStatement("SELECT COUNT(IDINSCRIPTION) FROM INSCRIPTION");
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			rs.next();
+			id=rs.getInt("COUNT(IDINSCRIPTION)");
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("ORA-00001"))
+				System.out.println("Erreur !");
+			else
+				e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return id;
 	}
 }

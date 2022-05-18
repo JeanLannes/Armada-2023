@@ -53,7 +53,7 @@ public class LegalPersonDAO extends ConnectionDAO {
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Ce idLegalPerson existe dï¿½jï¿½. Ajout impossible !");
+				System.out.println("Ce idLegalPerson existe déjà. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {

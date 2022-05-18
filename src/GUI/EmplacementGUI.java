@@ -61,6 +61,7 @@ public class EmplacementGUI extends JPanel {
 						cpt=CompteDAO.getWithMail(FindParticipant.getMail());
 						Participant part = new Participant();
 						part=ParticipantDAO.setConnexion(cpt.getId(),6, EmplacementDAO.getMaxID());
+						JOptionPane.showMessageDialog(btnAdd, "SUCCES : L'emplacement a bien été attribué.");
 					}
 					change(1);
 				}

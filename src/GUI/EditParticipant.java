@@ -154,9 +154,6 @@ public class EditParticipant extends JPanel {
 		lblMessageMdf = new JLabel("MODIFIER UN PARTICIPANT ");
 		lblMessageMdf.setBounds(315, 151, 392, 38);
 		lblMessageMdf.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessageMdf.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
-
-		//AJOUT DU TEXTE SUPPRIMER UN PARTICIPANT
 		lblMessageDlt = new JLabel("SUPPRIMER UN PARTICIPANT ");
 		lblMessageDlt.setBounds(285, 151, 469, 38);
 		lblMessageDlt.setHorizontalAlignment(SwingConstants.CENTER);
@@ -222,7 +219,6 @@ public class EditParticipant extends JPanel {
         String mail = tfMail.getText();
         String id = tfId.getText();
         String password = tfPassword.getText();
-		System.out.println(birthday);
         int cond=0;
         String test;
 		if (!birthday.isEmpty() && !ln.isEmpty() && !fn.isEmpty() && !mail.isEmpty() && !id.isEmpty() && !password.isEmpty()) {	
@@ -400,6 +396,29 @@ public class EditParticipant extends JPanel {
 			DelegationGUI.blockDelegation();
 			EntrepriseGUI.blockEntreprise();
 		}
+		if (i==5) {	// AJOUT D'UN PLAISANCIER
+			index=5;
+			lblMessageAdd.setVisible(false);
+			lblMessageMdf.setVisible(false);
+			lblMessageDlt.setVisible(false);
+			lblMessageCsl.setVisible(false);
+			tfId.setEditable(false);
+			tfId.setEditable(false);
+			tfMail.setEditable(true);
+			tfPassword.setEditable(true);
+			cbType.setEnabled(true);
+			tfFirstName.setEditable(true);
+			tfLastName.setEditable(true);
+			tfbirthday.setEditable(true);
+			tfId.setVisible(false);
+			lblId.setVisible(false);
+			BoatGUI.unblockBoat();
+			RetailerGUI.unblockRetailer();
+			HostFamilyGUI.unblockHostFamily();
+			DelegationGUI.unblockDelegation();
+			EntrepriseGUI.unblockEntreprise();
+		}
+		
 	}
 
 	/**

@@ -30,6 +30,7 @@ public class SignIn extends JPanel {
 	public SignIn() {
 		this.setLayout(null);
 		
+		//AJOUT DU BOUTON <<VALIDER>>
 		JButton btnAccept = new JButton("VALIDER");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -50,6 +51,7 @@ public class SignIn extends JPanel {
 		btnAccept.setBounds(200, 505, 200, 51);
 		btnAccept.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
+		//AJOUT DU BOUTON <<RETOUR>>
 		JButton btnReturn = new JButton("RETOUR");
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -59,43 +61,53 @@ public class SignIn extends JPanel {
 		btnReturn.setBounds(666, 505, 200, 51);
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
 		
+		//AJOUT DU TEXTE NOM
 		JLabel lblLastName = new JLabel("NOM :");
 		lblLastName.setBounds(193, 239, 95, 38);
 		lblLastName.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		
+		//AJOUT DU TEXTE PRENOM
 		JLabel lblFirstName = new JLabel("PRENOM :");
 		lblFirstName.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		lblFirstName.setBounds(500, 239, 139, 38);
 		
+		//AJOUT DU TEXTE ACTIVITE
 		JLabel lblActivity = new JLabel("ACTIVITE :");
 		lblActivity.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		lblActivity.setBounds(500, 306, 163, 38);
 		
+		//AJOUT DU TEXTE MAIL
 		JLabel lblMail = new JLabel("MAIL :");
 		lblMail.setFont(new Font("Trebuchet MS", Font.PLAIN, 32));
 		lblMail.setBounds(193, 306, 95, 38);
 		add(lblMail);
 		
+		//AJOUT DU TEXTE ESIGELEC
 		JLabel lblEsigelec = new JLabel("ESIGELEC");
 		lblEsigelec.setBounds(200, 100, 147, 67);
 		lblEsigelec.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
+		//AJOUT DU TEXTE ARMADA
 		JLabel lblArmada = new JLabel("ARMADA 2023");
 		lblArmada.setBounds(657, 100, 207, 67);
 		lblArmada.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
 		
+		//AJOUT DU CHAMP DE TEXTE ACTIVITE
 		tfActivity = new JTextField();
 		tfActivity.setColumns(10);
 		tfActivity.setBounds(666, 308, 200, 50);
-		
+	
+		//AJOUT DU CHAMP DE TEXTE PRENOM
 		tfFirstName = new JTextField();
 		tfFirstName.setColumns(10);
 		tfFirstName.setBounds(666, 239, 200, 50);
 		
+		//AJOUT DU CHAMP DE TEXTE NOM
 		tfLastName = new JTextField();
 		tfLastName.setColumns(10);
 		tfLastName.setBounds(287, 239, 200, 50);
 		
+		//AJOUT DU CHAMP DE TEXTE MAIL
 		tfMail = new JTextField();
 		tfMail.setColumns(10);
 		tfMail.setBounds(287, 306, 200, 50);

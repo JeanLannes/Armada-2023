@@ -15,25 +15,25 @@ import model.*;
  * @author BA Papa Amath
  * @version 1.0
  */
-public class PlaisancierDAO extends ConnectionDAO{
+public class BoaterDAO extends ConnectionDAO{
 	/**
 	 * Constructeur
 	 * 
 	 */
 	
-	public PlaisancierDAO ()
+	public BoaterDAO ()
 	{
 		super();
 	}
 	
 	/**
-	 * Permet d'ajouter un plaisancier dans la table plaisancier. Le mode est
+	 * Permet d'ajouter un plaisancier dans la table boater. Le mode est
 	 * auto-commit par defaut : chaque insertion est validee
 	 * 
 	 * @param plaisancier le plaisancier a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(Plaisancier plaisancier) {
+	public static int add(Boater boater) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -46,11 +46,10 @@ public class PlaisancierDAO extends ConnectionDAO{
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO plaisancier (IDPLAISANCIER, HORAIREARR, HORAIREDEP, EMPLACEMENTBASSIN) VALUES (?, ?, ?, ?)");
-			ps.setInt   (1, plaisancier.getId());
-			ps.setString(2, plaisancier.getHorraireArr());
-			ps.setString(3, plaisancier.getHorraireDep());
-			ps.setString(4, plaisancier.getEmplacementBassin());
+			ps = con.prepareStatement("INSERT INTO plaisancier (IDPLAISANCIER, HORAIREDEP, HORAIREARR) VALUES (?, ?, ?)");
+			ps.setInt   (1, boater.getId());
+			ps.setString(2, boater.getHorraireArr());
+			ps.setString(3, boater.getHorraireDep());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -80,13 +79,13 @@ public class PlaisancierDAO extends ConnectionDAO{
 	
 	
 	/**
-	 * Permet de modifier un plaisancier dans la table plaisancier. Le mode est
+	 * Permet de modifier un plaisancier dans la table boater. Le mode est
 	 * auto-commit par defaut : chaque modification est validee
 	 * 
 	 * @param plaisancier le plaisancier à modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(Plaisancier plaisancier) {
+	public int update(Boater boater) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -100,10 +99,10 @@ public class PlaisancierDAO extends ConnectionDAO{
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("UPDATE plaisancier set HORAIREARR = ?, HORAIREDEP = ?, EMPLACEMENTBASSIN = ?  WHERE IDPLAISANCIER = ?");
-			ps.setString(1, plaisancier.getHorraireArr());
-			ps.setString(2, plaisancier.getHorraireDep());
-			ps.setString(3, plaisancier.getEmplacementBassin());
-			ps.setInt(4, plaisancier.getId());
+			ps.setString(1, boater.getHorraireArr());
+			ps.setString(2, boater.getHorraireDep());
+			ps.setString(3, boater.getEmplacementBassin());
+			ps.setInt(4, boater.getId());
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
@@ -129,14 +128,14 @@ public class PlaisancierDAO extends ConnectionDAO{
 	
 	
 	/**
-	 * Permet de supprimer un plaisancier dans la table plaisancier. Si ce dernier
+	 * Permet de supprimer un plaisancier dans la table boater. Si ce dernier
 	 * est référé dans d'autre table, il ne sera pas supprimé. Le mode est auto-commit
 	 * par defaut : chaque suppression est validee
 	 * 
 	 * @param plaisancier le le plaisancier a supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
-	public int delete(Plaisancier plaisancier) {
+	public int delete(Boater boater) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -150,7 +149,7 @@ public class PlaisancierDAO extends ConnectionDAO{
 			// a communiquer dans la suppression.
 			// le getter permet de recuperer la valeur de l'ID du fournisseur
 			ps = con.prepareStatement("DELETE FROM plaisancier WHERE IDPLAISANCIER = ?");
-			ps.setInt(1, plaisancier.getId());
+			ps.setInt(1, boater.getId());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -187,11 +186,11 @@ public class PlaisancierDAO extends ConnectionDAO{
 	 * @return la personne Morale trouve; null si aucune personne Morale ne correspond a
 	 *         cette immatriculation
 	 */
-	public Plaisancier get(int IDplaisancier) {
+	public static Boater get(int IDplaisancier) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Plaisancier returnValue = null;
+		Boater returnValue = null;
 
 		// connexion a la base de donnees
 		try {
@@ -205,8 +204,8 @@ public class PlaisancierDAO extends ConnectionDAO{
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				
-				returnValue = new Plaisancier(rs.getInt("IDPLAISANCIER"), rs.getString("HORAIREARR"), rs.getString("HORAIREDEP"), rs.getString("EMPLACEMENTBASSIN"));
+				returnValue = new Boater(rs.getInt("IDPLAISANCIER"), rs.getString("HORAIREDEP"), rs.getString("HORAIREARR"));
+				returnValue.setEmplacementBassin(rs.getString("EMPLACEMENTBASSIN"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -231,7 +230,7 @@ public class PlaisancierDAO extends ConnectionDAO{
 			} catch (Exception ignore) {
 			}
 		}
-		return returnValue;
+		return returnValue=new Boater();
 	}
 	
 		public static int getMaxID() {
@@ -273,13 +272,13 @@ public class PlaisancierDAO extends ConnectionDAO{
 	}
 	
 	/**
-	 * Permet d'éditer les informations d'un plaisancier dans la table plaisancier. Le mode est
+	 * Permet d'éditer les informations d'un plaisancier dans la table boater. Le mode est
 	 * auto-commit par defaut : chaque insertion est validee
 	 * 
 	 * @param plaisancier le plaisancier dont les informations seront éditée 
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int editer(Plaisancier plaisancier) {
+	public int editer(Boater boater) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -293,10 +292,10 @@ public class PlaisancierDAO extends ConnectionDAO{
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("INSERT INTO plaisancier (HORRAIREARR, HORRAIREDEP, EMPLACEMENTBASSIN) VALUES (?, ?, ?, ?)  WHERE IDPLAISANCIER = ?");
-			ps.setString(1, plaisancier.getHorraireArr());
-			ps.setString(2, plaisancier.getHorraireDep());
-			ps.setString(3, plaisancier.getEmplacementBassin());
-			ps.setInt(4, plaisancier.getId());
+			ps.setString(1, boater.getHorraireArr());
+			ps.setString(2, boater.getHorraireDep());
+			ps.setString(3, boater.getEmplacementBassin());
+			ps.setInt(4, boater.getId());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();

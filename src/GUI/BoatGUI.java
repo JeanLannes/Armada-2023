@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import dao.BoatDAO;
@@ -51,7 +52,7 @@ public class BoatGUI extends JPanel {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 	            if (EditParticipant.getIndex()==4) {	// CONSULTATION
-					change();
+					change(1);
 				} else if (EditParticipant.getIndex()==0 || EditParticipant.getIndex()==1) {	//MODIFICATION
 					if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
 			            //CREATION D'UN COMMERCANT DANS LA BDD
@@ -63,6 +64,7 @@ public class BoatGUI extends JPanel {
 			            ParticipantDAO.setConnexion(cpt.getId(), 1, boat.getIdBoat());	
 		            	EditParticipant.closeEditParticipant();
 		            	Menu.block();
+		            	JOptionPane.showMessageDialog(btnAdd, "SUCCES : Le compte a été modifié.");
 		            }
 				} else if (EditParticipant.getIndex()==2) {					
 				if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
@@ -70,7 +72,6 @@ public class BoatGUI extends JPanel {
 	            	Compte cpt= new Compte();
 		            cpt=CompteDAO.getWithMail(Main.getMail());
 		            Participant part = new Participant();
-		            System.out.println(cpt.getId() + "151515");
 		            part = ParticipantDAO.get(cpt.getId());
 					//SUPPRESION D'UN COMMERCANT DANS LA BDD
 	            	BoatDAO.delete(part.getIdBoat());
@@ -87,7 +88,7 @@ public class BoatGUI extends JPanel {
 		JButton btnReturn = new JButton("RETOUR");	
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				change();
+				change(0);
 			}
 		});
 		btnReturn.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
@@ -191,14 +192,28 @@ public class BoatGUI extends JPanel {
 	 * @return boolean
 	 */
 	protected boolean verifytf() {
-        return true;
+		String captain = tfCaptain.getText();
+        String name = tfName.getText();
+        String lengh = tfLengh.getText();
+        String date = tfDate.getText();
+        String type = tfType.getText();
+        String immatriculation = tfImmatriculation.getText();
+        String flag = tfFlag.getText();
+		if (!captain.isEmpty() && !name.isEmpty() && !lengh.isEmpty() && !date.isEmpty() && !type.isEmpty() && !immatriculation.isEmpty() && !flag.isEmpty()) {	
+				return true;
+		}
+        JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
+        return false;
 	}
 	
 	/**
 	 * Permet de faire appel aux passerelles(dans le fichier Main) pour changer de page
 	 */
-	protected void change() {
-		Main.batToMp();
+	protected void change(int i) {
+		if (i==1) 
+			Main.batToMenu();
+		else
+			Main.batToMp();
 	}
 	
 	/**

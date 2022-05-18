@@ -56,11 +56,9 @@ public class AddParticipantGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 	            userText = tfId.getText();
 	            pwdText = tfPassword.getText();
-	            
 	            Compte cpt=null;
 	            Personne per=null;
 	            Participant part=null;
-	            
 	            if (verifytf()) {	//ASSURE QUE TOUS LES CHAMPS SONT OCCUPES
 	            	cpt = new Compte(CompteDAO.getMaxID()+1,pwdText,userText);	            	
 	            	per = new Personne(0,"0","0","0","1/1/01");
@@ -70,6 +68,7 @@ public class AddParticipantGUI extends JPanel {
 		            if (CompteDAO.add(cpt)!=2) {	// AJOUTE LE COMPTE DANS LA BDD
 		            	PersonneDAO.add(per);
 		            	ParticipantDAO.add(part);
+		            	JOptionPane.showMessageDialog(tfPassword, "SUCCES : Le compte a été crée.");
 		            	change();
 		            }
 	            }

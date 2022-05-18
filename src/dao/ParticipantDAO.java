@@ -180,6 +180,14 @@ public class ParticipantDAO extends ConnectionDAO {
 				rs = ps.executeQuery();
 			}
 			
+			if(type==7) { //AJOUTE UNE RESERVATION DE PLAISANCIER
+				ps = con.prepareStatement("UPDATE participant set IDPLAISANCIER = ? WHERE IDPARTICIPANT = ?");
+				ps.setInt(1, idtype);
+				ps.setInt(2, id);
+				// on execute la requete
+				rs = ps.executeQuery();
+			}
+
 			if(type==8) { //AJOUTE UNE FICHE DESCRIPTIVE
 				ps = con.prepareStatement("UPDATE participant set IDFICHE = ? WHERE IDPARTICIPANT = ?");
 				ps.setInt(1, idtype);
@@ -268,6 +276,48 @@ public class ParticipantDAO extends ConnectionDAO {
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
 				returnValue=rs.getInt("EMPLACEMENT");
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue; 
+	}
+
+	public static int getIdPlaisancier(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT IDPLAISANCIER FROM participant WHERE IDPARTICIPANT = ?");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue=rs.getInt("IDPLAISANCIER");
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();

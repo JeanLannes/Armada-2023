@@ -19,6 +19,9 @@ public class Main {
 	static HostFamilyGUI fa = new HostFamilyGUI();
 	static PersonneMorale pm = new PersonneMorale();
 	static EmplacementGUI emp = new EmplacementGUI();
+	static BoaterGUI btr = new BoaterGUI();
+	static ListOfEntreprisesGUI list = new ListOfEntreprisesGUI();
+	static ListOfIncriptionGUI listI = new ListOfIncriptionGUI();
 	static String mailAccount;
 	
 	public static void main(String[] args) {
@@ -206,6 +209,9 @@ public class Main {
 		mp.setVisible(true);
 	}
 	
+	/**
+	 * Remplace le contenue de la page modifyParticipant par celui de la page Bateau
+	 */
 	public static void mpToBat() {
 		mp.setVisible(false);
 		f.setContentPane(bat);
@@ -236,10 +242,10 @@ public class Main {
 		menu.setVisible(true);
 	}
 	
-	public static void mpToPm() {
-		mp.setVisible(false);
-		f.setContentPane(pm);
-		pm.setVisible(true);
+	public static void menuToPm() {
+		menu.setVisible(false);
+		f.setContentPane(mp);
+		mp.setVisible(true);
 	}
 	
 	public static void pmToMp() {
@@ -271,6 +277,18 @@ public class Main {
 		f.setContentPane(menu);
 		menu.setVisible(true);
 	}
+
+	public static void btrToMenu() {
+		btr.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void menuToBtr() {
+		menu.setVisible(false);
+		f.setContentPane(btr);
+		btr.setVisible(true);
+	}
 	
 	public static void empToFp() {
 		emp.setVisible(false);
@@ -286,5 +304,33 @@ public class Main {
 		mailAccount=mail;
 	}
 
+	public static void listToWel() {
+		list.setVisible(false);
+		f.setContentPane(wel);
+		wel.setVisible(true);
+	}
+	
+	public static void welToList() {
+		wel.setVisible(false);
+		f.setContentPane(list);
+		list.setVisible(true);
+	}
 
+	public static void batToMenu() {
+		bat.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void listIToMenu() {
+		listI.setVisible(false);
+		f.setContentPane(menu);
+		menu.setVisible(true);
+	}
+	
+	public static void menuTolistI() {
+		menu.setVisible(false);
+		f.setContentPane(listI);
+		listI.setVisible(true);
+	}
 }

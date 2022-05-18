@@ -55,10 +55,6 @@ public class CompteDAO extends ConnectionDAO {
 				return 2;
 			}
 		} catch (Exception e) {
-			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Erreur : L'id est deja associe");
-			else
-				e.printStackTrace();
 		} finally {
 			// fermeture du preparedStatement et de la connexion
 			try {

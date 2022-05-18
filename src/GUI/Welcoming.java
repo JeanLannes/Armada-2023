@@ -113,6 +113,16 @@ public class Welcoming extends JPanel {
 		add(btnSignIn);
 		add(tfPassword);
 		add(tfId);
+		
+		JButton btnListeDesPartenaires = new JButton("LISTE DES PARTENAIRES");
+		btnListeDesPartenaires.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.welToList();
+			}
+		});
+		btnListeDesPartenaires.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
+		btnListeDesPartenaires.setBounds(200, 430, 666, 51);
+		add(btnListeDesPartenaires);
 	}
 	
 	/**
